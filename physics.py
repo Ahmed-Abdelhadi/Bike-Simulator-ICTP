@@ -3,28 +3,20 @@ from math import sqrt
 class physics(object):
     
     def __init__(self, bike, terrain):
+	self.dt = 0.001
 	self.g = 10.0
-	self.wall_elastic= 100.0
+	self.wall_elastic= 10000.0
 	self.wall_damp = 100.0
-	self.pos = bike.pos
-	self.angle = bike.angle
-	self.v = bike.v
-	self.w = bike.w
-	self.a = bike.a
-	self.ang_a = bike.ang_a
-	self.r = bike.r
-	self.m = bike.m
-	self.k = bike.k
-	self.l = bike.l
+	self.motor_torque = 10.0
+	self.bike = bike
 	self.terrain = terrain
-	self.fx = [0.0]*4
-	self.fy = [0.0]*4
-
+	
     
     def stuck(self):
+	bike = self.bike
 	for i in xrange(2,4):
-	    for p in self.terrain.check(self.pos[i][0], self.pos[i][1], self.r[i]):
-		if p[1]<=0.0:
+	    for norm, dist, tan in self.terrain.check(bike.pos[i][0], bike.pos[i][1], bike.r[i]):
+		if dist<=0.0:
 		    return True
 	return False
     
@@ -44,65 +36,96 @@ class physics(object):
     
     
     def _wallforce(self, i):
-	self.fxwall = 0.0
-	self.fywall = 0.0
-	for p in self.terrain.check(self.pos[i][0], self.pos[i][1], self.r[i]):
-	    if p[1]<=self.r[i]:
-		self.dr = self.r[i]-p[i]
-		self.elastic_n = self.wall_elastic*dr
-		self.v_n = _dot(self.v[i], p[0])
-		self.damp_n = self.wall_damp*v_n
-		self.fxwall += self.elastic_n*p[0][0] - self.damp_n*p[0][0]
-		self.fywall += self.elastic_n*p[0][1] - self.damp_n*p[0][1]
-	return self.fxwall, self.fywall
+	bike = self.bike
+	fxwall = 0.0
+	fywall = 0.0
+	n = len(self.terrain.check(bike.pos[i][0], bike.pos[i][1], bike.r[i]))
+	for norm, dist, tan in self.terrain.check(bike.pos[i][0], bike.pos[i][1], bike.r[i]):
+	    if dist<=bike.r[i]:
+		dr = bike.r[i] - dist
+		elastic_n = self.wall_elastic*dr
+		v_n = self._dot(bike.v[i], norm)
+		damp_n = self.wall_damp*v_n
+		fn = elastic_n - damp_n
+		ft = 0.0
+		if i==0:
+		    ft = self.motor_torque/bike.r[i]/n
+		fxwall += fn*norm[0] + ft*tan[0]
+		fywall += fn*norm[1] + ft*tan[1]
+	return fxwall, fywall
     
     
     def _accelaration(self):
+	bike = self.bike
+	fx = [0.0]*4
+	fy = [0.0]*4
 	for i in xrange(2):
-	    self.fx[i], self.fy[i] = self._wallforce(i)
+	    fx[i], fy[i] = self._wallforce(i)
 	for i in xrange(4):
 	    for j in xrange(i+1,4):
-		self.dx = self.pos[j][0]-self.pos[i][0]
-		self.dy = self.pos[j][1]-self.pos[i][0]
-		self.r = sqrt(self.dx*self.dx + self.dy*self.dy)
-		self.dfx = self.k[i][j]*(self.l[i][j]-self.r)*self.dx/self.r
-		self.dfy = self.k[i][j]*(self.l[i][j]-self.r)*self.dy/self.r
-		self.fx[i] += self.dfx
-		self.fy[i] += self.dfy
-		self.fx[j] -= self.dfx
-		self.fy[j] -= self.dfy
+		dx = bike.pos[j][0]-bike.pos[i][0]
+		dy = bike.pos[j][1]-bike.pos[i][1]
+		r = sqrt(dx*dx + dy*dy)
+		dfx = bike.k[i][j]*(r-bike.l[i][j])*dx/r
+		dfy = bike.k[i][j]*(r-bike.l[i][j])*dy/r
+		fx[i] += dfx
+		fy[i] += dfy
+		fx[j] -= dfx
+		fy[j] -= dfy
 	for i in xrange(4):
-	    self.a[i][0] = self.fx[i]/self.m[i]
-	    self.a[i][1] = self.fy[i]/self.m[i] - self.g
+	    bike.a[i][0] = fx[i]/bike.m[i]
+	    bike.a[i][1] = fy[i]/bike.m[i] - self.g
+	#print (fx,fy)
     
     
     def _ang_accelaration(self):
 	for i in xrange(4):
-	    self.ang_a[i] = 0
+	    self.bike.ang_a[i] = 0
     
     
     def _velocity(self):
 	for i in xrange(4):
 	    for d in xrange(2):
-		self.v[i][d] += self.a[i][d]*self.dt/2
+		self.bike.v[i][d] += self.bike.a[i][d]*self.dt/2
     
     
     def _ang_velocity(self):
 	for i in xrange(2):
-	    self.w[i] += self.ang_a[i]*self.dt/2
+	    self.bike.w[i] += self.bike.ang_a[i]*self.dt/2
     
     
     def _position(self):
 	for i in xrange(4):
 	    for d in xrange(2):
-		self.pos([i][d] += self.v[i]*self.dt)
+		self.bike.pos[i][d] += self.bike.v[i][d]*self.dt
     
     
     def _angle(self):
 	for i in xrange(2):
-	    self.angle[i] += self.w[i]*self.dt
+	    self.bike.angle[i] += self.bike.w[i]*self.dt
     
     
     def _dot(self, a, b):
 	return a[0]*b[0] + a[1]*b[1]
+    
+    
+if __name__=='__main__':
+    from Bikestart import Bike
+    from terrain import Terrain
+    t = Terrain()
+    bike = Bike()
+    physics = physics(bike, t)
+    f = open('test.xyz','w')
+    for time in xrange(10000):
+	physics.step()
+	f.write("5\n%d\n" % time)
+	f.write("1\t%f\t%f\t0.0\n" % (bike.pos[0][0], bike.pos[0][1]))
+	f.write("1\t%f\t%f\t0.0\n" % (bike.pos[1][0], bike.pos[1][1]))
+	f.write("2\t%f\t%f\t0.0\n" % (bike.pos[2][0], bike.pos[2][1]))
+	f.write("2\t%f\t%f\t0.0\n" % (bike.pos[3][0], bike.pos[3][1]))
+	f.write("3\t0.0\t0.0\t0.0\n")
+	if physics.stuck():
+	    break
+    
+    
     
