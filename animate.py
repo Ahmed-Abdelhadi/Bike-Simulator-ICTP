@@ -1,23 +1,36 @@
-
 import numpy as np
 import scipy as sc
 import matplotlib.pyplot as plt
-from  terrain import *
+from  matplotlib.patches import Circle
+from  terrain import Terrain
 import math
-y4=np.minimum(tx,ty)
-plt.plot(tx,ty,lw=4)
-plt.fill_between(tx,ty,color='#aa0000',lw=4)
+from Bike_start import Bike
 
-x=[2.0,8.0,5.0,3.0]
-y=[1.0,1.0,4.0,4.0]
-wheelx=x[0:2]
-wheely=y[0:2]
-barx=x
-bary=y
+# Returning elements of the tuple 
+def  column (matrix,i):
+      return [row[i] for row in matrix]
 
-plt.fill(x,y,color='#bbefff')
-i#plt.plot(barx,bary,'-',linewidth=4.0)
-plt.plot(wheelx,wheely,marker='o',markersize=50.0,lw=3.0)
-#plt.plot(barx,bary,marker='^',markersize=5.0)
-#plt.show()
+t=Terrain()
+tx=t.x
+ty=t.y
+ty1=ty
+#Canvas
+plt.ylim([(min(ty)-5),(max(tx)/2.0)])
+plt.xlim([min(tx),max(tx)])
+
+plt.plot(tx,ty,'r')
+#plt.fill_between(tx,ty,-1,'r')
+# Plotting Bike
+bk=Bike()
+bx=column(bk.pos,0)
+by=column(bk.pos,1)
+wr=bk.r
+plt.fill(bx,by)
+
+# Plotting Wheel
+for i in xrange(0,4):
+  circle=plt.Circle((bx[i],by[i]),wr[i],color="#ccaa00")
+  fig=plt.gcf()
+  fig.gca().add_artist(circle)
+
 plt.show()
