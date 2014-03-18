@@ -9,7 +9,7 @@ class Bike(object):
   def __init__(self):
     #self.x=[x1,x2,x3,x4]
     #self.y=[y1,y2,y3,y4]
-    self.pos=[[4., 4.], [9., 4.], [4., 9.], [9., 9.]]
+    self.p=[[4., 4.], [9., 4.], [4., 9.], [9., 9.]]
     self.angle=[0.]*4
     self.r=[1., 1., 0., 0.]
     self.m=[1., 1., 1., 1.]
@@ -55,4 +55,4 @@ class Bike(object):
     pass
     
 H=Bike()    
-#print random.random()
+print random.randint(4, 5)
