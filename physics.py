@@ -50,7 +50,6 @@ class physics(object):
 		ft = 0.0
 		if i==0:
 		    ft = self.motor_torque/bike.r[i]/n
-		    print(ft,tan,norm)
 		fxwall += fn*norm[0] + ft*tan[0]
 		fywall += fn*norm[1] + ft*tan[1]
 	return fxwall, fywall
