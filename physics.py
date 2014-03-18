@@ -37,7 +37,7 @@ class physics(object):
 	self._ang_velocity()
     
     
-    def distance(self):
+    def get_result(self):
 	return self._rcm()[0] - xcm0
     
     
