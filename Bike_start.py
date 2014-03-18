@@ -22,4 +22,29 @@ class Bike(object):
 	dy=self.pos[j][1]-self.pos[i][1]
 	dr = math.sqrt(dx*dx + dy*dy)
 	self.l[i][j]=dr
- 
+
+#-------------- by Alex-----------
+  def randomize(self):
+    self.check()
+    return
+
+  def check(self):
+    for i in xrange (4):
+      for j in xrange(4):
+	dx=self.pos[j][0]-self.pos[i][0]
+	dy=self.pos[j][1]-self.pos[i][1]
+	dr = math.sqrt(dx*dx + dy*dy)
+	self.l[i][j]=dr
+    return
+
+  def set_result(self,l):
+    self.res=l
+    
+
+  def get_result(self):
+    try: 
+        return self.res
+    except:
+	return 1.
+#------------- end by Alex-------------------
+
