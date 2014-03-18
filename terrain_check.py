@@ -1,5 +1,5 @@
 #!/usr/bin/env python
-# module Terrain for for group 4
+# module Terrain_check for for group 4
 def check(x1,y1,x2,y2,x0,y0):
 #    print x1,y1,x2,y2,x0,y0
     v1 = (x0-x1,y0-y1)
@@ -17,12 +17,12 @@ def check(x1,y1,x2,y2,x0,y0):
     norm_length = (norm[0]*norm[0]+norm[1]*norm[1])**0.5
     norm = (norm[0]/norm_length,norm[1]/norm_length)
     return list((norm,norm_length,tau))
-#=================================================================
-class Terrain():
 
-    def __init__(self):
-	self.x = [i*10 for i in range(10)]
-	self.y = [0.  for i in self.x]
+class Terrain_check():
+
+    def __init__(self,terrain):
+	self.x = terrain[0]
+	self.y = terrain[1]
 
     def check(self, x0,y0,r=0):
 	#find nearest
@@ -70,10 +70,13 @@ if __name__=='__main__':	#run as a program
     import pylab as py 
     from random import random
     #test the module 
-    a=Terrain()
+    x=[i*10 for i in range(10)]
+    y=[i/50.*random() for i in x]                                          
     for i in range(10):
-	py.plot(a.x,a.y)
-	b=(40+random(),3.*random(),2.)
+	py.plot(x,y)
+	a=Terrain_check((x,y))
+    
+	b=(40+random(),3*random(),2.)
 	print a.check(*b)
 	py.scatter(b[0], b[1], s=(4*b[2])**2*3.14151, alpha=0.5)
 #        py.Circle((40, 0), 10, fc="g", ec="r", lw=5)
