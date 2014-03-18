@@ -10,6 +10,8 @@ class physics(object):
 	self.motor_torque = 10.0
 	self.bike = bike
 	self.terrain = terrain
+	self.xcm0 = self._rcm()[0]
+	self.distance = 0.0
 	
     
     def stuck(self):
@@ -33,6 +35,23 @@ class physics(object):
 	
 	self._velocity()
 	self._ang_velocity()
+    
+    
+    def get_result(self):
+	return self._rcm()[0] - xcm0
+    
+    
+    def _rcm(self):
+	bike = self.bike
+	m_total = 0.0
+	rcm = [0.0, 0.0]
+	for i in xrange(4):
+	    m_total += bike.m[i]
+	    for d in xrange(2):
+		rcm[d] += bike.m[i]*bike.pos[i][d]
+	for d in xrange(2):
+	    rcm[d] /= m_total
+	return rcm
     
     
     def _wallforce(self, i):
