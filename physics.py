@@ -30,36 +30,36 @@ class physics(object):
     
     
     def step(self):
-	_velocity()
-	_ang_velocity
+	self._velocity()
+	self._ang_velocity
 	
-	_position()
-	_angle()
+	self._position()
+	self._angle()
 	
-	_accelaration()
-	_ang_accelaration()
+	self._accelaration()
+	self._ang_accelaration()
 	
-	_velocity()
-	_ang_velocity()
+	self._velocity()
+	self._ang_velocity()
     
     
     def _wallforce(self, i):
-	self.fx = 0.0
-	self.fy = 0.0
+	self.fxwall = 0.0
+	self.fywall = 0.0
 	for p in self.terrain.check(self.pos[i][0], self.pos[i][1], self.r[i]):
 	    if p[1]<=self.r[i]:
 		self.dr = self.r[i]-p[i]
 		self.elastic_n = self.wall_elastic*dr
 		self.v_n = _dot(self.v[i], p[0])
 		self.damp_n = self.wall_damp*v_n
-		self.fx += self.elastic_n*p[0][0] - self.damp_n*p[0][0]
-		self.fy += self.elastic_n*p[0][1] - self.damp_n*p[0][1]
-	return fx, fy
+		self.fxwall += self.elastic_n*p[0][0] - self.damp_n*p[0][0]
+		self.fywall += self.elastic_n*p[0][1] - self.damp_n*p[0][1]
+	return self.fxwall, self.fywall
     
     
     def _accelaration(self):
 	for i in xrange(2):
-	    self.fx[i], self.fy[i] = _wallforce(i)
+	    self.fx[i], self.fy[i] = self._wallforce(i)
 	for i in xrange(4):
 	    for j in xrange(i+1,4):
 		self.dx = self.pos[j][0]-self.pos[i][0]
