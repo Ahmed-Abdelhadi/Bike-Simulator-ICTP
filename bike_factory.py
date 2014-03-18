@@ -10,7 +10,7 @@ class Bike_factory(Class):
 
     def __iter__(self):
 	for i in self.bikes:
-	    yeld i
+	    yield i
 	return
 
 #-----------------------------------------------------
