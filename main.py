@@ -12,7 +12,7 @@ for i in xrange(1):
 #go simulation
     for new_bike in factory():
     
-        physics = Physics_class(new_bike,terrain)
+        physics = physics(new_bike,terrain)
         visual  = Visual(new_bike,terrain)
 
         while physics.make_step(): 
