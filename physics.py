@@ -7,7 +7,7 @@ class physics(object):
 	self.g = 10.0
 	self.wall_elastic= 10000.0
 	self.wall_damp = 100.0
-	self.motor_torque = 1.0
+	self.motor_torque = 10.0
 	self.bike = bike
 	self.terrain = terrain
 	
@@ -39,6 +39,7 @@ class physics(object):
 	bike = self.bike
 	fxwall = 0.0
 	fywall = 0.0
+	n = len(self.terrain.check(bike.pos[i][0], bike.pos[i][1], bike.r[i]))
 	for norm, dist, tan in self.terrain.check(bike.pos[i][0], bike.pos[i][1], bike.r[i]):
 	    if dist<=bike.r[i]:
 		dr = bike.r[i] - dist
@@ -46,8 +47,12 @@ class physics(object):
 		v_n = self._dot(bike.v[i], norm)
 		damp_n = self.wall_damp*v_n
 		fn = elastic_n - damp_n
-		fxwall += fn*norm[0]
-		fywall += fn*norm[1]
+		ft = 0.0
+		if i==0:
+		    ft = self.motor_torque/bike.r[i]/n
+		    print(ft,tan,norm)
+		fxwall += fn*norm[0] + ft*tan[0]
+		fywall += fn*norm[1] + ft*tan[1]
 	return fxwall, fywall
     
     
