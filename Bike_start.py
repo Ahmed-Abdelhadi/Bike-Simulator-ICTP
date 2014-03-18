@@ -1,4 +1,5 @@
 import math
+import random
 
 class Bike(object):
   #def CalcDist(self,x1,y1,x2,y2):
@@ -9,12 +10,13 @@ class Bike(object):
     #self.x=[x1,x2,x3,x4]
     #self.y=[y1,y2,y3,y4]
     self.p=[[4., 4.], [9., 4.], [4., 9.], [9., 9.]]
+    self.angle=[0.]*4
     self.r=[1., 1., 0., 0.]
     self.m=[1., 1., 1., 1.]
     #self.vx=[vx1,vx2,vx3,vx4]
     #self.vy=[vy1,vy2,vy3,vy4]
     self.v=[[0., 0.]]*4
-    self.ang_v=[0.]*4
+    self.w=[0.]*4
     self.a=[[0., 0.]]*4
     self.ang_a=[0.]*4#[ang_a1,ang_a2,ang_a3,ang_a4]
     self.k=[[0.]*4]*4
@@ -30,9 +32,27 @@ class Bike(object):
 	dr = math.sqrt(dx*dx + dy*dy)
 	self.l[i][j]=dr
     
+  def GenerateBike():
+    #GeneratePts()
+    GenerateRadius()
+    GenerateMass()
+    GenerateSpring()    
+
+  def GeneratePts(self,r,MaxLength,MaxWidth):
+    pass
     
+    
+    
+    #pass
+
+  def GenerateRadius():
+    pass
+
+  def GenerateMass():
+    pass
+
+  def GenerateSpring():
+    pass
     
 H=Bike()    
-print H.k
-print H.l
-
+print random.randint(4, 5)
