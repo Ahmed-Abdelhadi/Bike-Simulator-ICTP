@@ -65,7 +65,7 @@ class Terrain():
 
     	    if norm[1]<0:
 	        print 'bike under terrain!!!'
-		norm_lenth *=-1
+		norm_length *=-1
 
 	    result.append((norm,norm_length,tau))
 	return result
