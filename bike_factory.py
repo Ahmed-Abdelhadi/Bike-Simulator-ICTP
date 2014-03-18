@@ -10,7 +10,7 @@ class Bike_factory(Class):
 
     def __iter__(self):
 	for i in self.bikes:
-	    yeld i
+	    yield i
 	return
 
 #-----------------------------------------------------
@@ -33,10 +33,27 @@ class Bike_factory(Class):
 #-----------------------------------------------------
     def  _crossover(self, bike1,bike2):
 	def _cross(a,b):
-	    return (b-a)*random()+a
+	    if a.has_attr('__itera__'):
+		res=[]
+		for i,j in zip(a,b):
+		    if i.has_attr('__itera__'):
+			ii = [(i1-j1)*(1.5*random()-0.25)+i1 for i1,j1 in zip(i,j)]
+		    else:
+			ii=(i1-j1)*(1.5*random()-0.25)+i1
+		    res.append(ii)
+	        return res
+	    else:
+	        return (b-a)*(1.5*random()-0.25)+a
 
         son = Bike()
-        son.x = self._cross(bike1.x,bike2.x)
+        son.P = self._cross(bike1.P,bike2.P)
+	son.check()
+# some properties of bikes
+#    self.P=[[x1,y1],[x2,y2],[x3,y3],[x4,y4]]
+#    self.r=[r1,r2,r3,r4]
+#    self.m=[m1,m2,m3,m4]
+#    self.k=[k1,k2,k3,k4,k5,k6]
+
         return son
 #----------------------------------------------------
     def  _mutation(self,bike):
