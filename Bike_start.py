@@ -9,7 +9,7 @@ class Bike(object):
   def __init__(self):
     #self.x=[x1,x2,x3,x4]
     #self.y=[y1,y2,y3,y4]
-    self.p=[[4., 4.], [9., 4.], [4., 9.], [9., 9.]]
+    self.pos=[[4., 4.], [9., 4.], [4., 9.], [9., 9.]]
     self.angle=[0.]*4
     self.r=[1., 1., 0., 0.]
     self.m=[1., 1., 1., 1.]
@@ -27,8 +27,8 @@ class Bike(object):
     for i in xrange (4):
       for j in xrange(4):
 	self.k[i][j]=1
-	dx=self.p[j][0]-self.p[i][0]
-	dy=self.p[j][1]-self.p[i][1]
+	dx=self.pos[j][0]-self.pos[i][0]
+	dy=self.pos[j][1]-self.pos[i][1]
 	dr = math.sqrt(dx*dx + dy*dy)
 	self.l[i][j]=dr
     
@@ -38,8 +38,19 @@ class Bike(object):
     GenerateMass()
     GenerateSpring()    
 
-  def GeneratePts(self,r,MaxLength,MaxWidth):
-    pass
+  def GeneratePts(self, object,r, MaxWidth, MaxHeigth):
+    for i in xrange(4):
+      if i==0:
+	xCoordinateL=r
+	xCoordinateU=MaxWidth-r
+	yCoordinateL=r
+	yCoordinateU=MaxHeigth-r
+	object.pos[i]=[random.randint(xCoordinateL, xCoordinateU), random.randint(yCoordinateL, yCoordinateU)]
+      if i==1:
+	pass
+	 
+    #print object.pos
+    #pass
     
     
     
@@ -53,6 +64,13 @@ class Bike(object):
 
   def GenerateSpring():
     pass
-    
-H=Bike()    
-print random.randint(4, 5)
+  
+def column(matrix, i):
+    return [row[i] for row in matrix]
+#H=Bike()    
+#print random.randint(4, 10)
+#print column(H.pos,1)
+
+#H.GeneratePts(H,4,100,100)
+
+
