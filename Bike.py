@@ -24,8 +24,6 @@ class Bike(object):
     distance=((x2-x1)**2+(y2-y1)**2)**0.5
     return distance
   
-  def cc
-  
   def GenerateBike():
     GeneratePts()
     GenerateRadius()

@@ -1,11 +1,13 @@
 #!/usr/bin/env python
 # Bike factory class for group 4
 #=================================================================
-class Bike_factory(Class):
-    from Bike import Bike
+class Bike_factory(object):
+#    from Bike_start import Bike
     
     def __init__(self, size = 100):
-	self.bikes = [Bike().randomize() for i in range(size) ]
+        from Bike_start import Bike
+	self.bikes = [Bike() for i in range(size) ]
+	[i.randomize() for i in self.bikes ]
 	self.mutation_ratio = 0.01
 
     def __iter__(self):
@@ -15,7 +17,6 @@ class Bike_factory(Class):
 
 #-----------------------------------------------------
     def make_new_generation(self):
-	return
 	old_bikes  =  self.bikes
 	self.bikes = []
 	total_distance = sum([i.get_result() for i in old_bikes])
@@ -64,4 +65,7 @@ class Bike_factory(Class):
 ################################################################3
 
 if __name__=='__main__':	#run as a program 
-    pass
+    b=Bike_factory(10)
+    for i in b:
+	print i
+    b.make_new_generation()
