@@ -50,19 +50,19 @@ class Terrain():
 	if result==[]:  	# vertex of terrain
 	    norm = (x0-x[n],y0-y[n])
             norm_length=(norm[0]*norm[0]+norm[1]*norm[1])**0.5
-            norm = (norm[0]/norm_length, norm[1]/norm_lenth)
+            norm = (norm[0]/norm_length, norm[1]/norm_length)
 	    if norm[1]<>0:
        	        tau = (1.,norm[0]/norm[1])
 	    else:
 		tau = (0.,1.)
             tau_length=(tau[0]*tau[0]+tau[1]*tau[1])**0.5
-            tau = (tau[0]/tau_length, tau[1]/tau_lenth)
+            tau = (tau[0]/tau_length, tau[1]/tau_length)
 
     	    if norm[1]<0:
 	        print 'bike under terrain!!!'
 		norm_lenth *=-1
 
-	    result.append((norm,norm_lenth,tau))
+	    result.append((norm,norm_length,tau))
 	return result
 
 
