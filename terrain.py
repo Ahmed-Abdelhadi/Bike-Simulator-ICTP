@@ -19,14 +19,14 @@ def _check(x1,y1,x2,y2,x0,y0):
     norm = (norm[0]/norm_length,norm[1]/norm_length)
     return list((norm,norm_length,tau))
 #=================================================================
-class Terrain():
+class terrain_class():
 
     def __init__(self,length = 100, angle=0., rand =0.):
 	from random import random
-	self.x = [i*10 for i in range(int(length/10))]
+	self.x = [i*10-10 for i in range(int(length/10)+1)]
 	self.y = [i*angle+rand*random()  for i in self.x]
 
-    def get_terrain(self):
+    def get(self):
 	return self.x, self.y
 
     def check(self, x0,y0,r=0):
@@ -56,13 +56,9 @@ class Terrain():
 	    norm = (x0-x[n],y0-y[n])
             norm_length=(norm[0]*norm[0]+norm[1]*norm[1])**0.5
             norm = (norm[0]/norm_length, norm[1]/norm_length)
-	    if norm[1]<>0:
-       	        tau = (1.,norm[0]/norm[1])
-	    else:
-		tau = (0.,1.)
-            tau_length=(tau[0]*tau[0]+tau[1]*tau[1])**0.5
-            tau = (tau[0]/tau_length, tau[1]/tau_length)
-
+            
+            tau = (norm[1], -norm[0])
+	    
     	    if norm[1]<0:
 	        print 'bike under terrain!!!'
 		norm_length *=-1

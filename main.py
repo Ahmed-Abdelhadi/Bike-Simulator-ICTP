@@ -8,13 +8,13 @@ from physics import physics
 terrain = Terrain()
 
 for i in xrange(1):
-    factory = Bike_factory(20)
+    factory = bike_factory_class(20)
 
 #go simulation
     for new_bike in factory:
     
-        physic = physics(new_bike,terrain)
-        animate  = animatebike(new_bike,terrain)
+        physic = physics_class(new_bike,terrain)
+        animate  = animate_class(new_bike,terrain)
 
         for time in xrange(10000):
 	    physic.step()

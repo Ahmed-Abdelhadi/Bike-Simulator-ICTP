@@ -1,6 +1,6 @@
 from math import sqrt
 
-class physics(object):
+class physics_class(object):
     
     def __init__(self, bike, terrain):
 	self.dt = 0.001
@@ -67,6 +67,7 @@ class physics(object):
 		damp_n = self.wall_damp*v_n
 		fn = elastic_n - damp_n
 		ft = 0.0
+		tan = self._n2t(norm)
 		if i==0:
 		    ft = self.motor_torque/bike.r[i]/n
 		fxwall += fn*norm[0] + ft*tan[0]
@@ -127,6 +128,9 @@ class physics(object):
     def _dot(self, a, b):
 	return a[0]*b[0] + a[1]*b[1]
     
+    
+    def _n2t(self, a):
+	return a[1], -a[0]
     
 if __name__=='__main__':
     from Bikestart import Bike

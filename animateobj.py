@@ -4,7 +4,7 @@ import matplotlib.pyplot as plt
 from  matplotlib.patches import Circle
 
 
-class animatebike(object):
+class animate_class(object):
     def __init__(self,bike,terrain):
 	self.bike=bike
 	self.terrain=terrain
@@ -19,15 +19,17 @@ class animatebike(object):
 	for i in xrange(2):
 	    self.circles.append(plt.Circle((bike.pos[i][0],bike.pos[i][1]),bike.r[i],linewidth=2,color="#00bb00"))
 	    self.axes.add_patch(self.circles[i])
+	for i in xrange(2,4):
+	    self.circles.append(plt.Circle((bike.pos[i][0],bike.pos[i][1]),0.05,linewidth=2,color="#00bb00"))
+	    self.axes.add_patch(self.circles[i])
 	for i in xrange(4):
 	    for j in xrange(i+1,4):
 		self.lines[i][j] = plt.Line2D([bike.pos[i][0],bike.pos[j][0]], [bike.pos[i][1],bike.pos[j][1]])
-		print(i,j)
 		self.axes.add_line(self.lines[i][j])
 		
    
     def draw(self):
-	for i in xrange(2):
+	for i in xrange(4):
 	    self.circles[i].center = (self.bike.pos[i][0], self.bike.pos[i][1])
 	for i in xrange(4):
 	    for j in xrange(i+1,4):
