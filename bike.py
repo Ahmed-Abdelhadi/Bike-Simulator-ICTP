@@ -3,7 +3,10 @@ import random
 
 class bike_class(object):
     def __init__(self):
-	self._position = [[6., 6.], [10., 6.], [10., 10.], [6., 10.]]
+	from copy import deepcopy
+	self._construction = [[6., 6.], [10., 6.], [10., 10.], [6., 10.]]
+	self._position = deepcopy(self._construction)
+
 	self._radius = [1., 1., 0., 0.]
 	self._mass = [10., 10., 30., 30.]
 	self._angle = [0. for i in xrange (4)]
@@ -22,14 +25,16 @@ class bike_class(object):
 		dr = math.sqrt(dx*dx + dy*dy)
 		self._spring_length[i][j]=dr
 		
-    def randomize(self):
+    def randomize(self,size = 5., offset = 3.):
 	for i in xrange (4):
 	    for j in xrange(2):
-		self.position[i][j]=20.*random.random()+6.
+		self._construction[i][j]=size*random.random()+offset
 	self.check()
 	return
 
     def check(self):
+	from copy import deepcopy
+	self._position = deepcopy(self._construction)
 	for i in xrange (4):
 	    for j in xrange(4):
 		dx=self.position[j][0]-self.position[i][0]
@@ -39,6 +44,10 @@ class bike_class(object):
 	return
 
 	
+    @property
+    def construction(self):
+	return self._construction
+
     @property
     def position(self):
 	return self._position
@@ -84,6 +93,10 @@ class bike_class(object):
 	return self._result
 
 	
+
+    @construction.setter
+    def construction(self, construction):
+	self._construction = construction
 
     @position.setter
     def position(self, position):

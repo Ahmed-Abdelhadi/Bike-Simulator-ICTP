@@ -7,20 +7,50 @@ from physics import physics_class
 
 terrain = terrain_class(rand=5, improved=True)
 
-for i in xrange(5):
-    factory = bike_factory_class(5)
+n_bike = 20
+factory = bike_factory_class(n_bike)
 
+for i in xrange(100):
+    print "Generation %i, try %i bikes"%(factory.generation,factory.size)
 #go simulation
-    for new_bike in factory:
+
+    for new_bike in factory.bikes:
     
         physics = physics_class(new_bike,terrain)
         animate  = animate_class(new_bike,terrain)
 
         for time in xrange(100000):
 	    physics.step()
-	    if not time%10:
+
+	    if not time%1000:
 		animate.draw()
-		pass
+
+	    if physics.stuck():
+		break
+	animate.close()
+	
+# get some data from physics and story the bike result
+	rr = physics.get_result()
+	print "result = ", rr
+        new_bike.result = rr
+
+    factory.make_new_generation()		#make some improovements genetics
+
+#---------------------------------------------------
+for i in xrange(5):
+    print "Generation %i, try %i bikes"%(factory.generation,factory.size)
+#go simulation
+    for new_bike in factory.bikes:
+    
+        physics = physics_class(new_bike,terrain)
+        animate  = animate_class(new_bike,terrain)
+
+        for time in xrange(100000):
+	    physics.step()
+
+	    if not time%100:
+		animate.draw()
+
 	    if physics.stuck():
 		break
 	animate.close()

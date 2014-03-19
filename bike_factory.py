@@ -34,49 +34,62 @@ class bike_factory_class(object):
     def __init__(self, size = 100):
 	"""Make set of random bikes, make mutation ratio (quality of production)"""
         from bike import bike_class
-	self.bikes = [bike_class() for i in range(size) ]
-	for b in self.bikes:
+	self._bikes = [bike_class() for i in range(size) ]
+	for b in self._bikes:
 	    b.randomize()
 	self.mutation_ratio = 0.01
-	self.size = size
+	self._size = size
+	self._generation = 0
 
-    def __iter__(self):
-	"""Send bike for testing """
-	for i in self.bikes:
-	    yield i
-	return
+    @property
+    def generation(self):
+	return self._generation
+
+    @property
+    def size(self):
+	return self._size
+    @property
+    def bikes(self):
+	return self._bikes
+
+#    def __call__(self):
+#	"""Send bike for testing """
+#	for i in self.bikes:
+#	    yield i
+#	return
 
 #-----------------------------------------------------
     def make_new_generation(self):
 	""" Produce new generation of bikes"""
-	old_bikes  =  self.bikes
-	self.bikes = []
+	self._generation += 1
+	old_bikes  =  self._bikes
+	self._bikes = []
 	# make ranking 
 	results=[]
-	for i in range(self.size):
-	    print i
+	for i in range(self._size):
 	    if old_bikes[i].result > 0:
 		results.append(old_bikes[i].result)
 	    else:
 		results.append(0)
-	
+	print 'result:',results
 	total_distance = sum(results)
 	if total_distance == 0:
 	    print "send bikes to test laboratory!!!!"
 	    exit(1)
 	probab = []
 	s = 0.
-	for i in range(self.size):
+	for i in range(self._size):
  	    s += results[i]/total_distance
 	    probab.append(s)
 #	print probab 
+	print 'probab:',probab
 
-	for i in range(self.size):
+	for i in range(self._size):
 	    bike1 = old_bikes[_choose_one(probab)]
 	    bike2 = old_bikes[_choose_one(probab)]
 	    new_bike = self._crossover(bike1,bike2)
 	    new_bike = self._mutation(new_bike)
-	    self.bikes.append(new_bike)
+	    self._bikes.append(new_bike)
 	return  True
 #-----------------------------------------------------
 #-----------------------------------------------------
@@ -85,7 +98,7 @@ class bike_factory_class(object):
 	""" Mix two bikes. Now only position and radius are upgrated"""
         from bike import bike_class
         son = bike_class()
-        son.position = _cross(bike1.position,bike2.position)
+        son.construction = _cross(bike1.construction,bike2.construction)
         son.radius = _cross(bike1.radius,bike2.radius)
 	son.check()
         return son
@@ -107,7 +120,7 @@ if __name__=='__main__':	#run as a program
 #------- test byke_factory_class -------------
     b=bike_factory_class(2)
     for  j in range(2):
-        for i in b:
+        for i in b.bikes:
 	    print i.position
 	    print i.radius
 	    i.result = 1
