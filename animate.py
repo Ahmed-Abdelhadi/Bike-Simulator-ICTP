@@ -16,7 +16,7 @@ class animate_class(object):
         plt.axis('equal')
 	#self.axes = self.fig.add_subplot('111',aspect='equal')
 	self.ax.set_xlim(0.,50.)
-	self.ax.set_ylim(0.,50.)
+	self.ax.set_ylim(0.,30.)
 	plt.plot(terrain.x,terrain.y,'r',lw=2.0)
 	for i in xrange(2):
 	    self.circles.append(plt.Circle((bike.position[i][0],bike.position[i][1]),bike.radius[i],linewidth=2,color="#00bb00"))
