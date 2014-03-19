@@ -52,7 +52,7 @@ class bike_class(object):
 	return self._radius
 	
     @property
-    def mass():
+    def mass(self):
 	return self._mass
 	
     @property
