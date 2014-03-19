@@ -38,7 +38,7 @@ class physics(object):
     
     
     def get_result(self):
-	return self._rcm()[0] - xcm0
+	return self._rcm()[0] - self.xcm0
     
     
     def _rcm(self):
@@ -131,8 +131,10 @@ class physics(object):
 if __name__=='__main__':
     from Bikestart import Bike
     from terrain import Terrain
+    from animateobj import animatebike
     t = Terrain()
     bike = Bike()
+    #visual = animatebike(bike, t)
     physics = physics(bike, t)
     f = open('test.xyz','w')
     for time in xrange(10000):
@@ -143,6 +145,7 @@ if __name__=='__main__':
 	f.write("2\t%f\t%f\t0.0\n" % (bike.pos[2][0], bike.pos[2][1]))
 	f.write("2\t%f\t%f\t0.0\n" % (bike.pos[3][0], bike.pos[3][1]))
 	f.write("3\t0.0\t0.0\t0.0\n")
+	#visual.visualize()
 	if physics.stuck():
 	    break
     
