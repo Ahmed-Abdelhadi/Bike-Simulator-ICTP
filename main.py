@@ -23,13 +23,12 @@ for i in xrange(5):
 		pass
 	    if physics.stuck():
 		break
-	animate.show()
-
+	animate.close()
+	
 # get some data from physics and story the bike result
 	rr = physics.get_result()
 	print "result = ", rr
         new_bike.result = rr
-
 
     factory.make_new_generation()		#make some improovements genetics
 
