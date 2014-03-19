@@ -23,7 +23,7 @@ class terrain_class():
 
     def __init__(self,length = 100, angle=0., rand =0.):
 	from random import random
-	self.x = [i*10 for i in range(int(length/10))]
+	self.x = [i*10-10 for i in range(int(length/10)+1)]
 	self.y = [i*angle+rand*random()  for i in self.x]
 
     def get(self):
@@ -71,7 +71,13 @@ class terrain_class():
 	    norm = (x0-x[n],y0-y[n])
             norm_length=(norm[0]*norm[0]+norm[1]*norm[1])**0.5
             norm = (norm[0]/norm_length, norm[1]/norm_length)
+<<<<<<< HEAD
             tau = (norm[1],-norm[0])
+=======
+            
+            tau = (norm[1], -norm[0])
+	    
+>>>>>>> 48b272045c55faf017d7487d92dd616068cce750
     	    if norm[1]<0:
 		tau = (-norm[1],norm[0])
 	        print 'bike under terrain!!!'

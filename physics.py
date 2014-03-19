@@ -1,6 +1,6 @@
 from math import sqrt
 
-class physics(object):
+class physics_class(object):
     
     def __init__(self, bike, terrain):
 	self.dt = 0.001
@@ -38,7 +38,7 @@ class physics(object):
     
     
     def get_result(self):
-	return self._rcm()[0] - xcm0
+	return self._rcm()[0] - self.xcm0
     
     
     def _rcm(self):
@@ -67,6 +67,7 @@ class physics(object):
 		damp_n = self.wall_damp*v_n
 		fn = elastic_n - damp_n
 		ft = 0.0
+		tan = self._n2t(norm)
 		if i==0:
 		    ft = self.motor_torque/bike.r[i]/n
 		fxwall += fn*norm[0] + ft*tan[0]
@@ -128,11 +129,16 @@ class physics(object):
 	return a[0]*b[0] + a[1]*b[1]
     
     
+    def _n2t(self, a):
+	return a[1], -a[0]
+    
 if __name__=='__main__':
     from Bikestart import Bike
     from terrain import Terrain
+    from animateobj import animatebike
     t = Terrain()
     bike = Bike()
+    #visual = animatebike(bike, t)
     physics = physics(bike, t)
     f = open('test.xyz','w')
     for time in xrange(10000):
@@ -143,6 +149,7 @@ if __name__=='__main__':
 	f.write("2\t%f\t%f\t0.0\n" % (bike.pos[2][0], bike.pos[2][1]))
 	f.write("2\t%f\t%f\t0.0\n" % (bike.pos[3][0], bike.pos[3][1]))
 	f.write("3\t0.0\t0.0\t0.0\n")
+	#visual.visualize()
 	if physics.stuck():
 	    break
     
