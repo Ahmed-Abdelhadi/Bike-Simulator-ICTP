@@ -54,7 +54,7 @@ class bike_factory_class(object):
 	# make ranking 
 	results=[]
 	for i in range(self.size):
-	    if old_bikes[i].get_result() > 0:
+	    if old_bikes[i].result() > 0:
 		results.append(old_bikes[i].get_result())
 	    else:
 		results.append(0)

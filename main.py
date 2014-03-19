@@ -16,7 +16,7 @@ for i in xrange(1):
         physics = physics_class(new_bike,terrain)
         animate  = animate_class(new_bike,terrain)
 
-        for time in xrange(10000):
+        for time in xrange(100000):
 	    physics.step()
 	    if not time%10:
 		animate.draw()
