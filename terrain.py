@@ -21,11 +21,18 @@ def _check(x1,y1,x2,y2,x0,y0):
 #=================================================================
 class terrain_class():
 
-    def __init__(self,length = 100, angle=0., rand =0.):
+    def __init__(self,length = 1000, angle=0., rand =0., improved=False):
 	from random import random
-	self.x = [i*10-10 for i in range(int(length/10)+1)]
-	self.y = [i*angle+rand*random()  for i in self.x]
-	self.y[0]=self.y[1]=self.y[2]=0.
+	if not improved:
+	    self.x = [i*10-10 for i in range(int(length/10)+1)]
+	    self.y = [i*angle+rand*random()  for i in self.x]
+	    self.y[0]=self.y[1]=self.y[2]=0.
+	else:
+	    self.x = [i*10-10 for i in range(int(length/10)+1)]
+	    self.y = [0.  for i in self.x]
+	    for i in range(1,int(length/10)+1):
+		delta = i*0.2
+		self.y[i] = self.y[i-1] + delta*random() - 0.5*delta
 
 
     def get(self):
