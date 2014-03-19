@@ -19,12 +19,12 @@ def _cross(a,b):
 
 
 #=================================================================
-class Bike_factory(object):
+class bike_factory_class(object):
 #    from Bike_start import Bike
     
     def __init__(self, size = 100):
-        from Bike_start import Bike
-	self.bikes = [Bike() for i in range(size) ]
+        from bike import bike
+	self.bikes = [bike() for i in range(size) ]
 	[i.randomize() for i in self.bikes ]
 	self.mutation_ratio = 0.01
 

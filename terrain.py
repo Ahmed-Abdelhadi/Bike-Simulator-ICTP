@@ -19,22 +19,37 @@ def _check(x1,y1,x2,y2,x0,y0):
     norm = (norm[0]/norm_length,norm[1]/norm_length)
     return list((norm,norm_length,tau))
 #=================================================================
-class Terrain():
+class terrain_class():
 
     def __init__(self,length = 100, angle=0., rand =0.):
 	from random import random
-	self.x = [i*10 for i in range(int(length/10))]
+	self.x = [i*10-10 for i in range(int(length/10)+1)]
 	self.y = [i*angle+rand*random()  for i in self.x]
 
-    def get_terrain(self):
+    def get(self):
 	return self.x, self.y
-
+#------------------------------------------------------
+    def out(self,x):
+	a = x
+	low_bound = (self.x[0]+self.x[1])/2.
+	hi_bound = (self.x[-2]+self.x[-1])/2.
+	while hasattr(a, '__iter__'):
+	    a = a[0]
+	if a <= low_bound:
+	    return 1
+	if a >= hi_bound:
+	    return 1
+	return 0
+#---------------------------------------------------------
     def check(self, x0,y0,r=0):
 	#find nearest
         x=self.x
         y=self.y
 	result=[]
 	dist,n = min([(abs(xi-x0),i) for i,xi in enumerate(x)])
+	if n == 0 or n == len(x)-1:
+	    print 'bike out of  terrain!!!'
+
 	# n is nearest
 	dist = _check(x[n-1],y[n-1],x[n],y[n],x0,y0)
 	if dist <> None:
@@ -56,17 +71,11 @@ class Terrain():
 	    norm = (x0-x[n],y0-y[n])
             norm_length=(norm[0]*norm[0]+norm[1]*norm[1])**0.5
             norm = (norm[0]/norm_length, norm[1]/norm_length)
-	    if norm[1]<>0:
-       	        tau = (1.,norm[0]/norm[1])
-	    else:
-		tau = (0.,1.)
-            tau_length=(tau[0]*tau[0]+tau[1]*tau[1])**0.5
-            tau = (tau[0]/tau_length, tau[1]/tau_length)
-
+            tau = (norm[1],-norm[0])
     	    if norm[1]<0:
+		tau = (-norm[1],norm[0])
 	        print 'bike under terrain!!!'
 		norm_length *=-1
-
 	    result.append((norm,norm_length,tau))
 	return result
 
@@ -77,7 +86,7 @@ if __name__=='__main__':	#run as a program
     import matplotlib.patches as mpatches
 
     #test the module 
-    a=Terrain(length =100, angle =0.5)
+    a=terrain_class(length =100, angle =0.5)
     for i in range(10):
 	py.plot(a.x,a.y)
 	b=(45.+random(),20+10.*random(),2.)

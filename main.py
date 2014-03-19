@@ -3,20 +3,27 @@
 from terrain import Terrain
 from bike_factory import Bike_factory
 from animateobj import animatebike
+from physics import physics
 
 terrain = Terrain()
 
 for i in xrange(1):
-    factory = Bike_factory(20)
+    factory = bike_factory_class(20)
 
 #go simulation
-    for new_bike in factory():
+    for new_bike in factory:
     
-        physics = physics(new_bike,terrain)
-        visual  = Visual(new_bike,terrain)
+        physic = physics_class(new_bike,terrain)
+        animate  = animate_class(new_bike,terrain)
 
-        while physics.make_step(): 
-	    animatebike.visualize()		# some visual
+        for time in xrange(10000):
+	    physic.step()
+	    if not time%10:
+		animate.draw()
+		pass
+	    if physic.stuck():
+		break
+	animate.show()
 
 # get some data from physics and story the bike result
         new_bike.set_result(physics.get_result())
