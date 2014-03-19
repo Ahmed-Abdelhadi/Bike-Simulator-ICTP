@@ -25,7 +25,7 @@ class bike_class(object):
     def randomize(self):
 	for i in xrange (4):
 	    for j in xrange(2):
-		self.position[i][j]=10.*random.random()+6.
+		self.position[i][j]=20.*random.random()+6.
 	self.check()
 	return
 
