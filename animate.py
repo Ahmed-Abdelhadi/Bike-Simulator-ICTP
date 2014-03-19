@@ -13,9 +13,10 @@ class animate_class(object):
 	plt.ion()
 	#self.figure = plt.figure()
         self.fig,self.ax=plt.subplots()
+        plt.axis('equal')
 	#self.axes = self.fig.add_subplot('111',aspect='equal')
-	self.ax.set_xlim(-1.,10.)
-	self.ax.set_ylim(-1.,10.)
+	self.ax.set_xlim(0.,50.)
+	self.ax.set_ylim(0.,20.)
 	plt.plot(terrain.x,terrain.y,'r',lw=2.0)
 	for i in xrange(2):
 	    self.circles.append(plt.Circle((bike.position[i][0],bike.position[i][1]),bike.radius[i],linewidth=2,color="#00bb00"))
@@ -34,8 +35,8 @@ class animate_class(object):
 	for i in xrange(4):
 	    self.circles[i].center = (self.bike.position[i][0], self.bike.position[i][1])
 	for i in xrange(4):
-            if(self.bike.position[i][0]>self.xmax):
-                self.ax.set_xlim((5+self.xmin),(5+self.xmax))
+            if(self.bike.position[i][0]>self.xmax-5):
+                self.ax.set_xlim((25+self.xmin),(25+self.xmax))
                 self.ax.figure.canvas.draw()
 	    for j in xrange(i+1,4):
 		self.lines[i][j].set_data([self.bike.position[i][0], self.bike.position[j][0]], [self.bike.position[i][1], self.bike.position[j][1]])
