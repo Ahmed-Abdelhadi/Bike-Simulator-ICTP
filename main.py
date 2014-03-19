@@ -5,7 +5,7 @@ from bike_factory import bike_factory_class
 from animate import animate_class
 from physics import physics_class
 
-terrain = terrain_class(rand=5)
+terrain = terrain_class(rand=5, improved=True)
 
 for i in xrange(5):
     factory = bike_factory_class(5)

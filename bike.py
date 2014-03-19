@@ -5,7 +5,7 @@ class bike_class(object):
     def __init__(self):
 	self._position = [[6., 6.], [10., 6.], [10., 10.], [6., 10.]]
 	self._radius = [1., 1., 0., 0.]
-	self._mass = [1., 1., 3., 3.]
+	self._mass = [10., 10., 30., 30.]
 	self._angle = [0. for i in xrange (4)]
 	self._velocity = [[0. for i in xrange (2)] for i in xrange(4)]
 	self._ang_velocity = [0. for i in xrange (4)]
@@ -16,7 +16,7 @@ class bike_class(object):
 	self._result=0
 	for i in xrange (4):
 	    for j in xrange(4):
-		self.spring_const[i][j] = 1000.
+		self.spring_const[i][j] = 10000.
 		dx=self.position[j][0]-self.position[i][0]
 		dy=self.position[j][1]-self.position[i][1]
 		dr = math.sqrt(dx*dx + dy*dy)
