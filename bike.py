@@ -5,7 +5,7 @@ class bike_class(object):
     def __init__(self):
 	self._position = [[6., 6.], [10., 6.], [10., 10.], [6., 10.]]
 	self._radius = [1., 1., 0., 0.]
-	self._mass = [10., 10., 1., 1.]
+	self._mass = [1., 1., 3., 3.]
 	self._angle = [0. for i in xrange (4)]
 	self._velocity = [[0. for i in xrange (2)] for i in xrange(4)]
 	self._ang_velocity = [0. for i in xrange (4)]
@@ -25,7 +25,7 @@ class bike_class(object):
     def randomize(self):
 	for i in xrange (4):
 	    for j in xrange(2):
-		self.position[i][j]=5*random.random()+6.
+		self.position[i][j]=10.*random.random()+6.
 	self.check()
 	return
 
