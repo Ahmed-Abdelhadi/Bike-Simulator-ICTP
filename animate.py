@@ -18,27 +18,27 @@ class animate_class(object):
 	self.ax.set_ylim(-1.,10.)
 	plt.plot(terrain.x,terrain.y,'r',lw=2.0)
 	for i in xrange(2):
-	    self.circles.append(plt.Circle((bike.pos[i][0],bike.pos[i][1]),bike.r[i],linewidth=2,color="#00bb00"))
+	    self.circles.append(plt.Circle((bike.position[i][0],bike.position[i][1]),bike.radius[i],linewidth=2,color="#00bb00"))
 	    self.ax.add_patch(self.circles[i])
 	for i in xrange(2,4):
-	    self.circles.append(plt.Circle((bike.pos[i][0],bike.pos[i][1]),0.05,linewidth=2,color="#00bb00"))
+	    self.circles.append(plt.Circle((bike.position[i][0],bike.position[i][1]),0.05,linewidth=2,color="#00bb00"))
 	    self.ax.add_patch(self.circles[i])
 	for i in xrange(4):
 	    for j in xrange(i+1,4):
-		self.lines[i][j] = plt.Line2D([bike.pos[i][0],bike.pos[j][0]], [bike.pos[i][1],bike.pos[j][1]])
+		self.lines[i][j] = plt.Line2D([bike.position[i][0],bike.position[j][0]], [bike.position[i][1],bike.position[j][1]])
 		self.ax.add_line(self.lines[i][j])
 		
    
     def draw(self):
         self.xmin,self.xmax=self.ax.get_xlim()
 	for i in xrange(4):
-	    self.circles[i].center = (self.bike.pos[i][0], self.bike.pos[i][1])
+	    self.circles[i].center = (self.bike.position[i][0], self.bike.position[i][1])
 	for i in xrange(4):
-            if(self.bike.pos[i][0]>self.xmax):
+            if(self.bike.position[i][0]>self.xmax):
                 self.ax.set_xlim((5+self.xmin),(5+self.xmax))
                 self.ax.figure.canvas.draw()
 	    for j in xrange(i+1,4):
-		self.lines[i][j].set_data([self.bike.pos[i][0], self.bike.pos[j][0]], [self.bike.pos[i][1], self.bike.pos[j][1]])
+		self.lines[i][j].set_data([self.bike.position[i][0], self.bike.position[j][0]], [self.bike.position[i][1], self.bike.position[j][1]])
         
 	plt.draw()
 	
@@ -57,13 +57,13 @@ class animate_class(object):
 	
 	# Filling the bicycle body
 	bike=self.bike
-	bx=self._column(bike.pos,0)
-	by=self._column(bike.pos,1)
+	bx=self._column(bike.position,0)
+	by=self._column(bike.position,1)
 	plt.fill(bx,by)
 	plt.draw()
 	# Drawing the Wheel with corresponding radius
-	bx=self._column(bike.pos,0)
-	by=self._column(bike.pos,1)
+	bx=self._column(bike.position,0)
+	by=self._column(bike.position,1)
 	wr=self.bike.r
 	for i in xrange(0,4):
 	    circle=plt.Circle((bx[i],by[i]),wr[i],color="#00bb00")
