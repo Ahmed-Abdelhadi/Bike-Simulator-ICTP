@@ -17,7 +17,7 @@ class physics_class(object):
     def stuck(self):
 	bike = self.bike
 	for i in xrange(2,4):
-	    for norm, dist, tan in self.terrain.check(bike.pos[i][0], bike.pos[i][1], bike.r[i]):
+	    for norm, dist, tan in self.terrain.check(bike.position[i][0], bike.position[i][1], bike.radius[i]):
 		if dist<=0.0:
 		    return True
 	return False
@@ -30,8 +30,8 @@ class physics_class(object):
 	self._position()
 	self._angle()
 	
-	self._accelaration()
-	self._ang_accelaration()
+	self._acceleration()
+	self._ang_acceleration()
 	
 	self._velocity()
 	self._ang_velocity()
@@ -75,7 +75,7 @@ class physics_class(object):
 	return fxwall, fywall
     
     
-    def _accelaration(self):
+    def _acceleration(self):
 	bike = self.bike
 	fx = [0.0]*4
 	fy = [0.0]*4
@@ -93,25 +93,25 @@ class physics_class(object):
 		fx[j] -= dfx
 		fy[j] -= dfy
 	for i in xrange(4):
-	    bike.accelaration[i][0] = fx[i]/bike.mass[i]
-	    bike.accelaration[i][1] = fy[i]/bike.mass[i] - self.g
+	    bike.acceleration[i][0] = fx[i]/bike.mass[i]
+	    bike.acceleration[i][1] = fy[i]/bike.mass[i] - self.g
 	#print (fx,fy)
     
     
-    def _ang_accelaration(self):
+    def _ang_acceleration(self):
 	for i in xrange(4):
-	    self.bike.ang_accelaration[i] = 0
+	    self.bike.ang_acceleration[i] = 0
     
     
     def _velocity(self):
 	for i in xrange(4):
 	    for d in xrange(2):
-		self.bike.velocity[i][d] += self.bike.accelaration[i][d]*self.dt/2
+		self.bike.velocity[i][d] += self.bike.acceleration[i][d]*self.dt/2
     
     
     def _ang_velocity(self):
 	for i in xrange(2):
-	    self.bike.ang_velocity[i] += self.bike.ang_accelaration[i]*self.dt/2
+	    self.bike.ang_velocity[i] += self.bike.ang_acceleration[i]*self.dt/2
     
     
     def _position(self):

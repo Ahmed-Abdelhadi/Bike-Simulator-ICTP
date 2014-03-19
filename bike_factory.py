@@ -14,14 +14,14 @@ def _cross(a,b):
         return (b-a)*(1.5*random()-0.25)+a
 
 #---------------------------------------------------
-    def _choose_one(probab):
-	""" Choose one position according probability function 
-	probab: list of increasing numbers steps are proportional to probabilitis"""
-	x = random()
-	for i,p in enumerate(probab):
-	    if x < p:
-    		return i
-        return i
+def _choose_one(probab):
+    """ Choose one position according probability function 
+        probab: list of increasing numbers steps are proportional to probabilitis"""
+    x = random()
+    for i,p in enumerate(probab):
+        if x < p:
+	    return i
+    return i
 
 
 #=================================================================
@@ -53,9 +53,9 @@ class bike_factory_class(object):
 	self.bikes = []
 	# make ranking 
 	results=[]
-	for i in range(self.len):
-	    if i.result > 0:
-		results.append(i.result)
+	for i in range(self.size):
+	    if old_bikes[i].get_result() > 0:
+		results.append(old_bikes[i].get_result())
 	    else:
 		results.append(0)
 	
@@ -65,8 +65,8 @@ class bike_factory_class(object):
 	    return
 	probab = []
 	s = 0.
-	for i in range(self.len):
- 	    s += result[i]/total_distance
+	for i in range(self.size):
+ 	    s += results[i]/total_distance
 	    probab.append(s)
 #	print probab 
 
@@ -81,6 +81,7 @@ class bike_factory_class(object):
 #-----------------------------------------------------
 # crossover some properties of bikes
     def  _crossover(self, bike1,bike2):
+	""" Mix two bikes. Now only position and radius are upgrated"""
         from bike import bike_class
         son = bike_class()
         son.position = _cross(bike1.position,bike2.position)
@@ -89,6 +90,8 @@ class bike_factory_class(object):
         return son
 #----------------------------------------------------
     def  _mutation(self,bike):
+	"""Make mutation.
+	    If random number is low then mutation_ratio make random bike"""
 	if random() < self.mutation_ratio:
             return bike.randomize()
 	else:
@@ -100,19 +103,23 @@ if __name__=='__main__':	#run as a program
     from random import random
     import matplotlib.patches as mpatches
 
-    b=bike_factory_class(10)
-#    for  j in range(2):
-#        for i in b:
-#	    print i.position
-#	    print i.radius
-#        b.make_new_generation()
+#------- test byke_factory_class -------------
+    b=bike_factory_class(2)
+    for  j in range(2):
+        for i in b:
+	    print i.position
+	    print i.radius
+        b.make_new_generation()
 # ---- test _cross function -----------------
-#    print _cross(1.,2.)
-#    print _cross([1.,1.],[2,2])
-#    print _cross([[1.,1],[1.,1]],[[2,2],[2,2]])
+    print _cross(1.,2.)
+    print _cross([1.,1.],[2,2])
+    print _cross([[1.,1],[1.,1]],[[2,2],[2,2]])
 
     prob = [_cross(1.,2.) for i in range(10000)]
     py.hist(prob, 50, normed=1, facecolor='green', alpha=0.5)
     py.show()
 #------- test _choose_one function -------------
+    prob = [_choose_one([0.5,0.6,0.7,1.]) for i in range(10000)]
+    py.hist(prob, 50, normed=1, facecolor='green', alpha=0.5)
+    py.show()
 
