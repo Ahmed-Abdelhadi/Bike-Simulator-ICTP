@@ -25,6 +25,8 @@ class terrain_class():
 	from random import random
 	self.x = [i*10-10 for i in range(int(length/10)+1)]
 	self.y = [i*angle+rand*random()  for i in self.x]
+	self.y[0]=self.y[1]=self.y[2]=0.
+
 
     def get(self):
 	return self.x, self.y

@@ -54,15 +54,16 @@ class bike_factory_class(object):
 	# make ranking 
 	results=[]
 	for i in range(self.size):
-	    if old_bikes[i].result() > 0:
-		results.append(old_bikes[i].get_result())
+	    print i
+	    if old_bikes[i].result > 0:
+		results.append(old_bikes[i].result)
 	    else:
 		results.append(0)
 	
 	total_distance = sum(results)
 	if total_distance == 0:
 	    print "send bikes to test laboratory!!!!"
-	    return
+	    exit(1)
 	probab = []
 	s = 0.
 	for i in range(self.size):
@@ -109,6 +110,7 @@ if __name__=='__main__':	#run as a program
         for i in b:
 	    print i.position
 	    print i.radius
+	    i.result = 1
         b.make_new_generation()
 # ---- test _cross function -----------------
     print _cross(1.,2.)
