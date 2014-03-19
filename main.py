@@ -1,11 +1,11 @@
 #!/usr/bin/env python
 # main program for group 4
-from terrain import Terrain
-from bike_factory import Bike_factory
-from animateobj import animatebike
-from physics import physics
+from terrain import terrain_class
+from bike_factory import bike_factory_class
+from animateobj import animate_class
+from physics import physics_class
 
-terrain = Terrain()
+terrain = terrain_class()
 
 for i in xrange(1):
     factory = bike_factory_class(20)
