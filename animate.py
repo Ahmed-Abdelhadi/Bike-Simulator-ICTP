@@ -47,6 +47,9 @@ class animate_class(object):
 	plt.ioff()
 	plt.show()
     
+    def close(self):
+	plt.close()
+    
     # Setting up Canvas and plot the terrain
     def visualize(self):
 	terrain=self.terrain
