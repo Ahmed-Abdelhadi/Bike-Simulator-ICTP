@@ -1,7 +1,7 @@
 import math
 import random
 
-class bike(object):
+class bike_class(object):
   
   def __init__(self):
     self.position=[[4., 4.], [9., 4.], [9., 9.], [4., 9.]]
