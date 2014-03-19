@@ -46,9 +46,9 @@ class physics_class(object):
 	m_total = 0.0
 	rcm = [0.0, 0.0]
 	for i in xrange(4):
-	    m_total += bike.m[i]
+	    m_total += bike.mass[i]
 	    for d in xrange(2):
-		rcm[d] += bike.m[i]*bike.pos[i][d]
+		rcm[d] += bike.mass[i]*bike.position[i][d]
 	for d in xrange(2):
 	    rcm[d] /= m_total
 	return rcm
@@ -58,18 +58,18 @@ class physics_class(object):
 	bike = self.bike
 	fxwall = 0.0
 	fywall = 0.0
-	n = len(self.terrain.check(bike.pos[i][0], bike.pos[i][1], bike.r[i]))
-	for norm, dist, tan in self.terrain.check(bike.pos[i][0], bike.pos[i][1], bike.r[i]):
-	    if dist<=bike.r[i]:
-		dr = bike.r[i] - dist
+	n = len(self.terrain.check(bike.position[i][0], bike.position[i][1], bike.radius[i]))
+	for norm, dist, tan in self.terrain.check(bike.position[i][0], bike.position[i][1], bike.radius[i]):
+	    if dist<=bike.radius[i]:
+		dr = bike.radius[i] - dist
 		elastic_n = self.wall_elastic*dr
-		v_n = self._dot(bike.v[i], norm)
+		v_n = self._dot(bike.velocity[i], norm)
 		damp_n = self.wall_damp*v_n
 		fn = elastic_n - damp_n
 		ft = 0.0
 		tan = self._n2t(norm)
 		if i==0:
-		    ft = self.motor_torque/bike.r[i]/n
+		    ft = self.motor_torque/bike.radius[i]/n
 		fxwall += fn*norm[0] + ft*tan[0]
 		fywall += fn*norm[1] + ft*tan[1]
 	return fxwall, fywall
@@ -83,46 +83,46 @@ class physics_class(object):
 	    fx[i], fy[i] = self._wallforce(i)
 	for i in xrange(4):
 	    for j in xrange(i+1,4):
-		dx = bike.pos[j][0]-bike.pos[i][0]
-		dy = bike.pos[j][1]-bike.pos[i][1]
+		dx = bike.position[j][0]-bike.position[i][0]
+		dy = bike.position[j][1]-bike.position[i][1]
 		r = sqrt(dx*dx + dy*dy)
-		dfx = bike.k[i][j]*(r-bike.l[i][j])*dx/r
-		dfy = bike.k[i][j]*(r-bike.l[i][j])*dy/r
+		dfx = bike.spring_const[i][j]*(r-bike.spring_length[i][j])*dx/r
+		dfy = bike.spring_const[i][j]*(r-bike.spring_length[i][j])*dy/r
 		fx[i] += dfx
 		fy[i] += dfy
 		fx[j] -= dfx
 		fy[j] -= dfy
 	for i in xrange(4):
-	    bike.a[i][0] = fx[i]/bike.m[i]
-	    bike.a[i][1] = fy[i]/bike.m[i] - self.g
+	    bike.accelaration[i][0] = fx[i]/bike.mass[i]
+	    bike.accelaration[i][1] = fy[i]/bike.mass[i] - self.g
 	#print (fx,fy)
     
     
     def _ang_accelaration(self):
 	for i in xrange(4):
-	    self.bike.ang_a[i] = 0
+	    self.bike.ang_accelaration[i] = 0
     
     
     def _velocity(self):
 	for i in xrange(4):
 	    for d in xrange(2):
-		self.bike.v[i][d] += self.bike.a[i][d]*self.dt/2
+		self.bike.velocity[i][d] += self.bike.accelaration[i][d]*self.dt/2
     
     
     def _ang_velocity(self):
 	for i in xrange(2):
-	    self.bike.w[i] += self.bike.ang_a[i]*self.dt/2
+	    self.bike.ang_velocity[i] += self.bike.ang_accelaration[i]*self.dt/2
     
     
     def _position(self):
 	for i in xrange(4):
 	    for d in xrange(2):
-		self.bike.pos[i][d] += self.bike.v[i][d]*self.dt
+		self.bike.position[i][d] += self.bike.velocity[i][d]*self.dt
     
     
     def _angle(self):
 	for i in xrange(2):
-	    self.bike.angle[i] += self.bike.w[i]*self.dt
+	    self.bike.angle[i] += self.bike.ang_velocity[i]*self.dt
     
     
     def _dot(self, a, b):

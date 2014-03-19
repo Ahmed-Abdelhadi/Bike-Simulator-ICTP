@@ -52,7 +52,7 @@ class bike_class(object):
 	return self._radius
 	
     @property
-    def mass():
+    def mass(self):
 	return self._mass
 	
     @property
@@ -116,7 +116,7 @@ class bike_class(object):
 		dx=self.position[j][0]-self.position[i][0]
 		dy=self.position[j][1]-self.position[i][1]
 		dr = math.sqrt(dx*dx + dy*dy)
-		self.length[i][j]=dr
+		self._spring_length[i][j]=dr
 	return
 
     def set_result(self,result):
