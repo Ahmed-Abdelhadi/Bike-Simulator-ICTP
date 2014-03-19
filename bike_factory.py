@@ -88,10 +88,11 @@ class bike_factory_class(object):
 	    bike1 = old_bikes[_choose_one(probab)]
 	    bike2 = old_bikes[_choose_one(probab)]
 	    new_bike = self._crossover(bike1,bike2)
-	    new_bike = self._mutation(new_bike)
+	    # Make mutation.
+	    if random() < self.mutation_ratio:
+	       new_bike.randomize()
 	    self._bikes.append(new_bike)
 	return  True
-#-----------------------------------------------------
 #-----------------------------------------------------
 # crossover some properties of bikes
     def  _crossover(self, bike1,bike2):
@@ -102,14 +103,6 @@ class bike_factory_class(object):
         son.radius = _cross(bike1.radius,bike2.radius)
 	son.check()
         return son
-#----------------------------------------------------
-    def  _mutation(self,bike):
-	"""Make mutation.
-	    If random number is low then mutation_ratio make random bike"""
-	if random() < self.mutation_ratio:
-            return bike.randomize()
-	else:
-	    return bike
 ################################################################3
 
 if __name__=='__main__':	#run as a program 
