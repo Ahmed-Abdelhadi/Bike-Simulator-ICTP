@@ -7,8 +7,8 @@ from physics import physics_class
 
 terrain = terrain_class(rand=5)
 
-for i in xrange(1):
-    factory = bike_factory_class(20)
+for i in xrange(5):
+    factory = bike_factory_class(5)
 
 #go simulation
     for new_bike in factory:
@@ -26,7 +26,9 @@ for i in xrange(1):
 	animate.show()
 
 # get some data from physics and story the bike result
-        new_bike.set_result(physics.get_result())
+	rr = physics.get_result()
+	print "result = ", rr
+        new_bike.result = rr
 
 
     factory.make_new_generation()		#make some improovements genetics
