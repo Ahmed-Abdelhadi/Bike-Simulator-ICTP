@@ -17,7 +17,7 @@ class bike_class(object):
     
     for i in xrange (4):
       for j in xrange(4):
-	self.spring_constant[i][j]=500
+	self.spring_constant[i][j]=1000
 	dx=self.position[j][0]-self.position[i][0]
 	dy=self.position[j][1]-self.position[i][1]
 	dr = math.sqrt(dx*dx + dy*dy)
