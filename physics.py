@@ -5,9 +5,9 @@ class physics_class(object):
     def __init__(self, bike, terrain):
 	self.dt = 0.001
 	self.g = 10.0
-	self.wall_elastic= 10000.0
-	self.wall_damp = 100.0
-	self.motor_torque = 10.0
+	self.wall_elastic= 100000.0
+	self.wall_damp = 1000.0
+	self.motor_torque = 100.0
 	self.bike = bike
 	self.terrain = terrain
 	self.xcm0 = self._rcm()[0]
