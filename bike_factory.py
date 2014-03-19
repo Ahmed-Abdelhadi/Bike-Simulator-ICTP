@@ -61,7 +61,6 @@ class bike_factory_class(object):
 #-----------------------------------------------------
     def make_new_generation(self):
 	""" Produce new generation of bikes"""
-	self._generation += 1
 	old_bikes  =  self._bikes
 	self._bikes = []
 	# make ranking 
@@ -71,7 +70,7 @@ class bike_factory_class(object):
 		results.append(old_bikes[i].result)
 	    else:
 		results.append(0)
-	print 'result:',results
+#	print 'result:',results
 	total_distance = sum(results)
 	if total_distance == 0:
 	    print "send bikes to test laboratory!!!!"
@@ -82,16 +81,23 @@ class bike_factory_class(object):
  	    s += results[i]/total_distance
 	    probab.append(s)
 #	print probab 
-	print 'probab:',probab
+#	print 'probab:',[ i/total_distance for i in results ]
+        print "Generation %i, %i bikes, average distance: %f "%(self._generation,self._size,total_distance/self._size )
 
 	for i in range(self._size):
 	    bike1 = old_bikes[_choose_one(probab)]
 	    bike2 = old_bikes[_choose_one(probab)]
 	    new_bike = self._crossover(bike1,bike2)
 	    # Make mutation.
+	    if bike1 == bike2:
+		if self.mutation_ratio < 0.5:
+		    self.mutation_ratio += 0.01
+ 		    print "Crossover of two equal bikes. Mutation ratio is increased!!! %f"%self.mutation_ratio
+
 	    if random() < self.mutation_ratio:
 	       new_bike.randomize()
 	    self._bikes.append(new_bike)
+	self._generation += 1
 	return  True
 #-----------------------------------------------------
 # crossover some properties of bikes
