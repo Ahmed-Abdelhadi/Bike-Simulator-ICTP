@@ -13,7 +13,7 @@ class bike_class(object):
 	self._ang_acceleration = [0. for i in xrange (4)]#[ang_a1,ang_a2,ang_a3,ang_a4]
 	self._spring_const = [[0. for i in xrange (4)] for i in xrange(4)]
 	self._spring_length = [[0. for i in xrange (4)] for i in xrange(4)]
-	
+	self._result=0
 	for i in xrange (4):
 	    for j in xrange(4):
 		self.spring_const[i][j] = 1000.
@@ -22,7 +22,23 @@ class bike_class(object):
 		dr = math.sqrt(dx*dx + dy*dy)
 		self._spring_length[i][j]=dr
 		
+    def randomize(self):
+	for i in xrange (4):
+	    for j in xrange(2):
+		self.position[i][j]=5*random.random()+3
+	self.check()
+	return
 
+    def check(self):
+	for i in xrange (4):
+	    for j in xrange(4):
+		dx=self.position[j][0]-self.position[i][0]
+		dy=self.position[j][1]-self.position[i][1]
+		dr = math.sqrt(dx*dx + dy*dy)
+		self._spring_length[i][j]=dr
+	return
+
+	
     @property
     def position(self):
 	return self._position
@@ -62,6 +78,11 @@ class bike_class(object):
     @property
     def spring_length(self):
 	return self._spring_length
+	
+    @property
+    def result(self):
+	return self._result
+
 	
 
     @position.setter
@@ -104,38 +125,19 @@ class bike_class(object):
     def spring_length(self, spring_length):
 	self._spring_length = spring_length
 	
-
-#-------------- by Alex-----------
-    def randomize(self):
-	#for i in xrange (4):
-	 #   for j in xrange(4):
-	#[random.randint(xCoordinateL, xCoordinateU), random.randint(yCoordinateL, yCoordinateU)]
-	self.check()
-	return
-
-    def check(self):
-	for i in xrange (4):
-	    for j in xrange(4):
-		dx=self.position[j][0]-self.position[i][0]
-		dy=self.position[j][1]-self.position[i][1]
-		dr = math.sqrt(dx*dx + dy*dy)
-		self._spring_length[i][j]=dr
-	return
-
-    def set_result(self,result):
-	self.result=result
+    @result.setter
+    def result(self, result):
+	self._result=result
     
 
-    def get_result(self):
-	try: 
-	    return self.res
-	except:
-	    return 1.
-#------------- end by Alex-------------------
+ 
 
 if __name__=="__main__":
     #pass
     H=bike_class()
-    print H.position
     print H.radius
+    print H.position
+    H.randomize()
+    print H.position
+    #print H.position[2]
     
