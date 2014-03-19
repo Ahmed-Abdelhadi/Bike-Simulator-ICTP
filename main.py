@@ -1,11 +1,11 @@
 #!/usr/bin/env python
 # main program for group 4
-from terrain import Terrain
-from bike_factory import Bike_factory
-from animateobj import animatebike
-from physics import physics
+from terrain  import terrain_class
+from bike_factory import bike_factory_class
+from animate import animate_class
+from physics import physics_class
 
-terrain = Terrain()
+terrain = terrain_class(rand=5)
 
 for i in xrange(1):
     factory = bike_factory_class(20)
@@ -13,15 +13,15 @@ for i in xrange(1):
 #go simulation
     for new_bike in factory:
     
-        physic = physics_class(new_bike,terrain)
+        physics = physics_class(new_bike,terrain)
         animate  = animate_class(new_bike,terrain)
 
         for time in xrange(10000):
-	    physic.step()
+	    physics.step()
 	    if not time%10:
 		animate.draw()
 		pass
-	    if physic.stuck():
+	    if physics.stuck():
 		break
 	animate.show()
 
