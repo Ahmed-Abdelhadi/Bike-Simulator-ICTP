@@ -143,7 +143,6 @@ class bike_class(object):
     def result(self, result):
 	self._result=result
     
-    
     def save_json(self, path):
 	a = {
 	    "position" : self._position,
@@ -153,26 +152,23 @@ class bike_class(object):
 	    "spring_const" : self._spring_const,
 	    "spring_length" : self._spring_length,  
 	    }
-	
-	
 	x=json.dumps(a, sort_keys=True, indent=4)
 	with open(path, 'wb') as fp:
 	    fp.write(x)
+
 	    
     def load_json(self, path):
 	with open(path, 'rb') as fp:
 	    y = json.load(fp)
 	    return y
-  
-
  
-
+ 
 if __name__=="__main__":
     H=bike_class()
     H.randomize()
     x=H.save_json("data.json")
     data=H.load_json("data.json")
-    print data["position"]
+    #print data["position"]
     #print data["radius"]
     #print data["mass"]
     #print data["result"]
