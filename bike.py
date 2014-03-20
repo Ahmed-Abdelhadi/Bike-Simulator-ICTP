@@ -1,5 +1,6 @@
 import math
 import random
+import json
 
 class bike_class(object):
     def __init__(self):
@@ -142,6 +143,17 @@ class bike_class(object):
     def result(self, result):
 	self._result=result
     
+    
+    def save_json(self, path):
+	x=json.dumps(self, default=lambda o: o.__dict__, sort_keys=True, indent=4)
+	with open(path, 'wb') as fp:
+	    json.dump(x, fp)
+	    
+    def load_json(self, path):
+	with open(path, 'rb') as fp:
+	    y = json.load(fp)
+	    return y
+  
 
  
 
@@ -153,4 +165,6 @@ if __name__=="__main__":
     H.randomize()
     print H.position
     #print H.position[2]
-    
+    x=H.save_json("data.json")
+    data=H.load_json("data.json")
+    print data
