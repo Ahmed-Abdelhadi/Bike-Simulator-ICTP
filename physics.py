@@ -25,16 +25,16 @@ class physics_class(object):
     
     def step(self):
 	self._velocity()
-	self._ang_velocity
+	#self._ang_velocity
 	
 	self._position()
-	self._angle()
+	#self._angle()
 	
 	self._acceleration()
-	self._ang_acceleration()
+	#self._ang_acceleration()
 	
 	self._velocity()
-	self._ang_velocity()
+	#self._ang_velocity()
     
     
     def get_result(self):

@@ -7,8 +7,8 @@ from physics import physics_class
 
 terrain = terrain_class(rand=5, improved=True)
 
-for i in xrange(5):
-    factory = bike_factory_class(5)
+for i in xrange(10):
+    factory = bike_factory_class(1)
 
 #go simulation
     for new_bike in factory:
