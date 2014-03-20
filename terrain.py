@@ -4,7 +4,7 @@
 class terrain_class(object):
     """The class for terrain surface manipulation.
 
-        Kwargs:
+        Args:
            length (float): Length of terrain surfase.
 
            angle (float): Trend coeficient. Make it small.
@@ -58,7 +58,6 @@ class terrain_class(object):
     Args:
        x0,y0 (float):  Coordinates of the point.
 
-    Kwargs:
        r (float): Not used.
 
     Returns:
