@@ -3,6 +3,10 @@ import random
 import json
 
 class bike_class(object):
+    """
+    The main purpose of this class is to generate a bike with many specifications like (Coordinates, Radius, Mass, Velocity, Acceleration, ....)
+    """
+    
     def __init__(self):
 	from copy import deepcopy
 	self._construction = [[6., 6.], [10., 6.], [10., 10.], [6., 10.]]
@@ -27,6 +31,12 @@ class bike_class(object):
 		self._spring_length[i][j]=dr
 		
     def randomize(self,size = 10., offset = 3.):
+	"""This function produces random Bicycles. It has two arguments:
+	
+	Size = number of generated bikes
+	
+	offset = the displacement from the origin
+	"""
 	for i in xrange (2):
 	    self._radius[i] = 0.5+2.5*random.random()
 	for i in xrange (4):
@@ -37,6 +47,9 @@ class bike_class(object):
 	return
 
     def check(self):
+	"""
+	This function calculate the spring_length
+	"""
 	from copy import deepcopy
 	self._position = deepcopy(self._construction)
 	for i in xrange (4):
@@ -50,50 +63,86 @@ class bike_class(object):
 	
     @property
     def construction(self):
+	"""
+	This function get the value of the construction
+	"""
 	return self._construction
 
     @property
     def position(self):
+	"""
+	This function get the value of the bicycle coordinate
+	"""
 	return self._position
     
     @property
     def velocity(self):
+	"""
+	This function get the value of the velocity
+	"""
 	return self._velocity
 	
     @property
     def acceleration(self):
+	"""
+	This function get the value of the acceleration
+	"""
 	return self._acceleration
 
     @property
     def angle(self):
+	"""
+	This function get the value of the angle of the wheels
+	"""
 	return self._angle
 	
     @property
     def ang_velocity(self):
+	"""
+	This function get the value of the angular veleocity
+	"""
 	return self._ang_velocity
 
     @property
     def ang_acceleration(self):
+	"""
+	This function get the value of the angular acceleration
+	"""
 	return self._ang_acceleration	
     
     @property
     def radius(self):
+	"""
+	This function get the value of the raduis of the wheels
+	"""
 	return self._radius
 	
     @property
     def mass(self):
+	"""
+	This function get the value of the mass at the four points 
+	"""
 	return self._mass
 	
     @property
     def spring_const(self):
+	"""
+	This function get the value of the spring constants
+	"""
 	return self._spring_const
 	
     @property
     def spring_length(self):
+	"""
+	This function get the value of the spring length
+	"""
 	return self._spring_length
 	
     @property
     def result(self):
+	"""
+	This function get the value of the distance that each bike has moved 
+	"""
 	return self._result
 
 	
@@ -147,6 +196,9 @@ class bike_class(object):
 	self._result=result
     
     def save_json(self, path):
+	"""
+	This function save bike objects into json files
+	"""
 	a = {
 	    "position" : self._position,
 	    "radius" : self._radius,
@@ -161,6 +213,9 @@ class bike_class(object):
 
 	    
     def load_json(self, path):
+	"""
+	This function load json files into a dictionary 
+	"""
 	with open(path, 'rb') as fp:
 	    y = json.load(fp)
 	    return y
