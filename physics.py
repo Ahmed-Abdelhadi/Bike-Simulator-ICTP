@@ -1,8 +1,28 @@
 from math import sqrt
 
 class physics_class(object):
+    """
+    physics_class:
+	This class will provide you with the physical engine.
+    """
     
     def __init__(self, bike, terrain):
+	"""
+	This creates a new physics_class object.
+	
+	Args:
+	    bike (bike_class): The bike intended for simulation.
+	    terrain (terrain_class): The terrain intended for simulation.
+	
+	Kwargs:
+	    None
+	
+	Returns:
+	    physics_class: The physical engine
+	
+	Raises:
+	    None
+	"""
 	self.dt = 0.001
 	self.g = 10.0
 	self.wall_elastic= 100000.0
@@ -15,6 +35,21 @@ class physics_class(object):
 	
     
     def stuck(self):
+	"""
+	This checks whether the bike is stuck or not (collision of point mass with the ground).
+	
+	Args:
+	    None
+	
+	Kwargs:
+	    None
+	
+	Returns:
+	    bool: True if the bike is stuck
+	
+	Raises:
+	    None
+	"""
 	bike = self.bike
 	for i in xrange(2,4):
 	    for norm, dist, tan in self.terrain.check(bike.position[i][0], bike.position[i][1], bike.radius[i]):
@@ -24,6 +59,21 @@ class physics_class(object):
     
     
     def step(self):
+	"""
+	This advances the bike one timestep.
+	
+	Args:
+	    None
+	
+	Kwargs:
+	    None
+	
+	Returns:
+	    None
+	
+	Raises:
+	    None
+	"""
 	self._velocity()
 	#self._ang_velocity
 	
@@ -38,6 +88,22 @@ class physics_class(object):
     
     
     def get_result(self):
+	"""
+	This returns the score a bike has achieved so far. Currently it's the 
+	horizontal distance traveled by the center of mass of the bike.
+	
+	Args:
+	    None
+	
+	Kwargs:
+	    None
+	
+	Returns:
+	    float: The bike's score
+	
+	Raises:
+	    None
+	"""
 	return self._rcm()[0] - self.xcm0
     
     

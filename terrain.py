@@ -1,8 +1,18 @@
 #!/usr/bin/env python
 # module Terrain for for group 4
-#import numpy as np
 #=================================================================
-class terrain_class():
+class terrain_class(object):
+    """The class for terrain surface manipulation.
+
+        Kwargs:
+           length (float): Length of terrain surfase.
+
+           angle (float): Trend coeficient. Make it small.
+
+           rand (float): Random amplitude of surface oscilation.
+
+           improved (boolean): If 'True' - amplitude is increasing for long dictances.
+    """
 
     def __init__(self,length = 1000, angle=0., rand =0., improved=False):
 	from random import random
@@ -23,6 +33,11 @@ class terrain_class():
 		self.tau[i] = (self.tau[i][0]/self.tau_length[i],self.tau[i][1]/self.tau_length[i])
 
     def get(self):
+	"""Return the terrain prifile
+
+	Returns: 
+	    ([x],[y]) (lists): Set of x and y coordinates.
+	"""
 	return self.x, self.y
 #------------------------------------------------------
     def out(self,x):
@@ -38,6 +53,21 @@ class terrain_class():
 	return 0
 #---------------------------------------------------------
     def check(self, x0,y0,r=0):
+        """Find the distance to the terrain from the given point.
+
+    Args:
+       x0,y0 (float):  Coordinates of the point.
+
+    Kwargs:
+       r (float): Not used.
+
+    Returns:
+       (norm_x,norm_y) (float): Normalized normal vector
+
+       distance (float):	Distance to surface (negative if point is below surface)
+
+       (tau_x,tau_y) (float):   Normalized tangent vector
+    """
 	#find nearest
 	x = self.x
 	y = self.y
@@ -76,6 +106,8 @@ class terrain_class():
 	return result
 
     def save_json(self, path='terrain.sav'):
+        """Write terrain surface in file.
+    """
 	import json
 	a = {'x':self.x,'y':self.y}
 	x=json.dumps(a, sort_keys=True, indent=4)
@@ -83,6 +115,8 @@ class terrain_class():
 	    fp.write(x)
 
     def load_json(self, path='terrain.sav'):
+        """Read terrain surface from file.
+    """
 	import json
 	with open(path, 'rb') as fp:
 	    a = json.load(fp)
