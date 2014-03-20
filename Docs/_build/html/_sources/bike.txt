@@ -2,7 +2,9 @@ Bike Class:
 ======================================
 
 In this class we discuss the creation of bike with the following parameters:
+
 * Points
+
 * Radius
 
 Here is something I want to talk about::

@@ -7,9 +7,16 @@ Welcome to Funny Bike's documentation!
 ======================================
 
 Contents:
-This is the our documentation
+In this documentation we report our implemetation of Funny Bikes using genetic algorithms. This project has been developed during ICTP workshop of Advanced Scientific Programming using Open Source packages by:
 
-My 
+1- Ahmed 
+
+2- Alex
+
+3- Morteza
+
+4- Prathyusha
+
 
 .. toctree::
    :maxdepth: 2

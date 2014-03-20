@@ -1,5 +1,4 @@
- 
-terrain Class: 
+Terrain Class: 
 ======================================
 
 In this class we discuss the creation of bike with the following parameters:
