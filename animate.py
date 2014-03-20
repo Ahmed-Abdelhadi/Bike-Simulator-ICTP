@@ -2,7 +2,7 @@ import numpy as np
 import scipy as sc
 import matplotlib.pyplot as plt
 from  matplotlib.patches import Circle
-
+from physics import physics_class
 
 class animate_class(object):
     def __init__(self, bike, mask, terrain):
