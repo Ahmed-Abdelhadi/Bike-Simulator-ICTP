@@ -17,6 +17,13 @@ In this documentation we report our implemetation of Funny Bikes using genetic a
 
 4- Prathyusha
 
+Under Supervision of: Richard Berger 
+
+.. image:: photo.jpg
+    :width: 500px
+    :align: center
+    :height: 400px
+    
 This program consists of the following main classes:
 
 
