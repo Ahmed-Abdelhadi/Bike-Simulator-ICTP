@@ -30,9 +30,10 @@ for i in xrange(3):
     animate.close()
 	
 # get some data from physics and story the bike result
-    #rr = physics.get_result()
-    #print "result = ", rr
-    #new_bike.result = rr
+    for b in xrange(n_bike):
+	rr = physics[b].get_result()
+	print "result = ", rr
+	factory.bikes[b].result = rr
 
     factory.make_new_generation()		#make some improovements genetics
 
