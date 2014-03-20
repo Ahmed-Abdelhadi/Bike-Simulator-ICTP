@@ -22,12 +22,13 @@ class animate_class(object):
 	#self.axes = self.fig.add_subplot('111',aspect='equal')
 	self.ax.set_xlim(0.,50.)
 	self.ax.set_ylim(0.,30.)
-	plt.plot(terrain.x,terrain.y,'r',lw=2.0)
+	plt.plot(terrain.x,terrain.y,'r',lw=2.0, color="#000000")
 
 
 	for b in xrange(self.bike_num):
+	    self.circles[b][0] = plt.Circle((bike[b].position[0][0],bike[b].position[0][1]),bike[b].radius[0],linewidth=2,color="#ff0000")
+	    self.circles[b][1] = plt.Circle((bike[b].position[1][0],bike[b].position[1][1]),bike[b].radius[1],linewidth=2,color="#00bb00")
 	    for i in xrange(2):
-		self.circles[b][i] = plt.Circle((bike[b].position[i][0],bike[b].position[i][1]),bike[b].radius[i],linewidth=2,color="#00bb00")
 		self.ax.add_patch(self.circles[b][i])
 	    for i in xrange(2,4):
 		self.circles[b][i] = plt.Circle((bike[b].position[i][0],bike[b].position[i][1]),0.05,linewidth=2,color="#00bb00")
