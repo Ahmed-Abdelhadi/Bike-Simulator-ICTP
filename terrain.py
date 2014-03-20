@@ -1,6 +1,7 @@
 #!/usr/bin/env python
 # module Terrain for for group 4
 #import numpy as np
+
 def _check(x1,y1,x2,y2,x0,y0):
 #    print x1,y1,x2,y2,x0,y0
     v1 = (x0-x1,y0-y1)
@@ -88,14 +89,37 @@ class terrain_class():
 	    result.append((norm,norm_length,tau))
 	return result
 
+    def save_json(self, path='terrain.sav'):
+	import json
+	a = {'x':self.x,'y':self.y}
+	x=json.dumps(a, sort_keys=True, indent=4)
+	with open(path, 'wb') as fp:
+	    fp.write(x)
+
+    def load_json(self, path='terrain.sav'):
+	import json
+	with open(path, 'rb') as fp:
+	    a = json.load(fp)
+	self.x=a['x']
+	self.y=a['y']
+	return
+
+
 
 if __name__=='__main__':	#run as a program 
     import pylab as py 
     from random import random
     import matplotlib.patches as mpatches
 
+
     #test the module 
     a=terrain_class(length =100, angle =0.5)
+
+    a.save_json()
+    a.load_json()
+    print a.x,a.y
+
+
     for i in range(10):
 	py.plot(a.x,a.y)
 	b=(45.+random(),20+10.*random(),2.)

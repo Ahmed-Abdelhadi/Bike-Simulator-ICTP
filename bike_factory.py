@@ -83,18 +83,21 @@ class bike_factory_class(object):
 #	print probab 
 #	print 'probab:',[ i/total_distance for i in results ]
         print "Generation %i, %i bikes, average distance: %f "%(self._generation,self._size,total_distance/self._size )
+	f=open('bikes.log','ab')
+	f.write("Generation %i, %i bikes, average distance: %f \n"%(self._generation,self._size,total_distance/self._size ))
+	f.write('Results: %s\n'%str(results))
+	f.close()
 
 	for i in range(self._size):
 	    bike1 = old_bikes[_choose_one(probab)]
 	    bike2 = old_bikes[_choose_one(probab)]
 	    new_bike = self._crossover(bike1,bike2)
 	    # Make mutation.
+	    mutation = self.mutation_ratio
 	    if bike1 == bike2:
-		if self.mutation_ratio < 0.5:
-		    self.mutation_ratio += 0.01
- 		    print "Crossover of two equal bikes. Mutation ratio is increased!!! %f"%self.mutation_ratio
-
-	    if random() < self.mutation_ratio:
+		mutation = 0.25
+ 		print "Crossover of two equal bikes. Mutation ratio is %f!!!"%mutation
+	    if random() < mutation:
 	       new_bike.randomize()
 	    self._bikes.append(new_bike)
 	self._generation += 1
@@ -109,6 +112,22 @@ class bike_factory_class(object):
         son.radius = _cross(bike1.radius,bike2.radius)
 	son.check()
         return son
+    
+    
+def save_bike_factory(factory,filename = 'bike_factory.sav'):
+    from pickle import dump
+    f=open(filename,'wb')
+    dump(factory,f)
+    f.close()
+    return
+
+def read_bike_factory(filename = 'bike_factory.sav'):
+    from pickle import load 
+    f=open(filename,'rb')
+    factory = load(f)
+    f.close()
+    return factory
+
 ################################################################3
 
 if __name__=='__main__':	#run as a program 
@@ -116,8 +135,12 @@ if __name__=='__main__':	#run as a program
     from random import random
     import matplotlib.patches as mpatches
 
+
 #------- test byke_factory_class -------------
     b=bike_factory_class(2)
+    save_bike_factory(b)
+    b=read_bike_factory()
+
     for  j in range(2):
         for i in b.bikes:
 	    print i.position
