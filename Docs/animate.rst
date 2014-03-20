@@ -1,4 +1,4 @@
-animate Class: 
+Animate Class: 
 ======================================
 
 In this class we discuss the visualization of the  bike during the simulation:
