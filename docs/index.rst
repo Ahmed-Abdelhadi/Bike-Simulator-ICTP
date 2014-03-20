@@ -6,23 +6,18 @@
 Welcome to Funny Bike's documentation!
 ======================================
 
-Contents:
 In this documentation we report our implemetation of Funny Bikes using genetic algorithms. This project has been developed during ICTP workshop of Advanced Scientific Programming using Open Source packages by:
 
-1- Ahmed 
 
-2- Alex
-
-3- Morteza
-
-4- Prathyusha
-
-Under Supervision of: Richard Berger 
-
-.. image:: photo.jpg
+.. figure:: photo.jpg
     :width: 500px
     :align: center
     :height: 400px
+    :name: helloooo
+    
+    (Alex, Prathyusha, Morteza, Richard, Ahmed)
+
+
     
 This program consists of the following main classes:
 
