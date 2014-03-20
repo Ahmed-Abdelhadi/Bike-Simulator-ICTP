@@ -168,20 +168,13 @@ class bike_class(object):
  
 
 if __name__=="__main__":
-    #pass
     H=bike_class()
-    #print H.radius
-    #print H.position
     H.randomize()
-   # print H.position
-    #print H.position[2]
     x=H.save_json("data.json")
     data=H.load_json("data.json")
     print data["position"]
-    print data["radius"]
-    print data["mass"]
-    print data["result"]
-    print data["spring_const"]
-    print data["spring_length"]
- 
-    
+    #print data["radius"]
+    #print data["mass"]
+    #print data["result"]
+    #print data["spring_const"]
+    #print data["spring_length"]
