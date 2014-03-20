@@ -2,7 +2,7 @@ import numpy as np
 import scipy as sc
 import matplotlib.pyplot as plt
 from  matplotlib.patches import Circle
-from physics import physics_class
+
 
 class animate_class(object):
     def __init__(self,bike,terrain):
@@ -17,10 +17,7 @@ class animate_class(object):
 	#self.axes = self.fig.add_subplot('111',aspect='equal')
 	self.ax.set_xlim(0.,50.)
 	self.ax.set_ylim(0.,30.)
-        self.physics=physics_class(bike,terrain)
-        #rr = self.physics.get_result()
-        #print "result from animate = ", rr
-	plt.plot(terrain.x,terrain.y,'r',lw=5.0)
+	plt.plot(terrain.x,terrain.y,'r',lw=2.0)
 	for i in xrange(2):
 	    self.circles.append(plt.Circle((bike.position[i][0],bike.position[i][1]),bike.radius[i],linewidth=2,color="#00bb00"))
 	    self.ax.add_patch(self.circles[i])
@@ -42,7 +39,7 @@ class animate_class(object):
             if(self.bike.position[i][0]>self.xmax-5):
                 self.ax.set_xlim((25+self.xmin),(25+self.xmax))
             if(self.bike.position[i][0]<self.xmin):
-                self.ax.set_xlim((self.xmin-10),(self.xmax-10))
+                self.ax.set_xlim((self.xmin-10),(10-self.xmax))
                 self.ax.figure.canvas.draw()
             if(self.bike.position[i][1]<self.ymin+5):
                 self.ax.set_ylim((self.ymin-5),(self.ymax-5))
