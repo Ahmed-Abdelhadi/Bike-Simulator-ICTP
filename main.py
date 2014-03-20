@@ -10,7 +10,7 @@ terrain = terrain_class(rand=5, improved=True)
 n_bike = 30
 factory = bike_factory_class(n_bike)
 
-for i in xrange(100):
+for i in xrange(30):
     print "Generation %i, try %i bikes"%(factory.generation,factory.size)
 #go simulation
     
@@ -22,7 +22,7 @@ for i in xrange(100):
 	    physics.step()
 
 	    if not time%100:
-		animate.draw()
+		animate.draw(i)
 
 	    if physics.stuck():
 		break
@@ -48,7 +48,7 @@ for i in xrange(5):
 	    physics.step()
 
 	    if not time%100:
-		animate.draw()
+		animate.draw(i)
 
 	    if physics.stuck():
 		break
