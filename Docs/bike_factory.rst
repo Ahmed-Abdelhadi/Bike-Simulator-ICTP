@@ -1,10 +1,11 @@
- 
-Bike_factory Class: 
+
+Bike_factory Class:
 ======================================
 
-In this class we discuss the creation of bike with the following parameters:
-* Points
-* Radius
+In this class we implement:
+* Pull of bikes of sertain size
+* Genetig algorithm for making a new generation of bikes
+* Storing and reading state of bike_factory
 
 Here is something I want to talk about::
 
