@@ -110,6 +110,7 @@ class bike_factory_class(object):
         son = bike_class()
         son.construction = _cross(bike1.construction,bike2.construction)
         son.radius = _cross(bike1.radius,bike2.radius)
+        son.spring_const = _cross(bike1.spring_const, bik2.spring_const)
 	son.check()
         return son
     

@@ -30,6 +30,7 @@ class bike_class(object):
 	for i in xrange (4):
 	    for j in xrange(2):
 		self._construction[i][j]=size*random.random()+offset
+		self._spring_const[i][j]=(9.9*random.random()+0.1)*spring_const[i][j]
 	self.check()
 	return
 
