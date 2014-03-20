@@ -32,6 +32,7 @@ class physics_class(object):
 	self.terrain = terrain
 	self.xcm0 = self._rcm()[0]
 	self.distance = 0.0
+	self.stuck = False
 	
     
     def stuck(self):
@@ -74,6 +75,15 @@ class physics_class(object):
 	Raises:
 	    None
 	"""
+	bike = self.bike
+	if self.stuck:
+	    return False
+	for i in xrange(2,4):
+	    for norm, dist, tan in self.terrain.check(bike.position[i][0], bike.position[i][1], bike.radius[i]):
+		if dist<=0.0:
+		    self.stuck = True
+		    return False
+	
 	self._velocity()
 	#self._ang_velocity
 	
@@ -85,6 +95,8 @@ class physics_class(object):
 	
 	self._velocity()
 	#self._ang_velocity()
+	
+	return True
     
     
     def get_result(self):
@@ -122,10 +134,11 @@ class physics_class(object):
     
     def _wallforce(self, i):
 	bike = self.bike
+	check = self.terrain.check
 	fxwall = 0.0
 	fywall = 0.0
-	n = len(self.terrain.check(bike.position[i][0], bike.position[i][1], bike.radius[i]))
-	for norm, dist, tan in self.terrain.check(bike.position[i][0], bike.position[i][1], bike.radius[i]):
+	n = len(check(bike.position[i][0], bike.position[i][1], bike.radius[i]))
+	for norm, dist, tan in check(bike.position[i][0], bike.position[i][1], bike.radius[i]):
 	    if dist<=bike.radius[i]:
 		dr = bike.radius[i] - dist
 		elastic_n = self.wall_elastic*dr

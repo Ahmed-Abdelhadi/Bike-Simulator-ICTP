@@ -51,35 +51,40 @@ class animate_class(object):
 
         Changes the window as the bike moves.
         """
-        self.gen=gen
-        self.string='Generation %d'%self.gen
+        bike = self.bike
+        mask = self.mask
+        circles = self.circles
+        lines = self.lines
+        self.string='Generation %d'%gen
         self.ax.text(0.05,0.9,self.string,fontsize=20.0,transform=self.ax.transAxes)
-        self.xmin,self.xmax=self.ax.get_xlim()
-        self.ymin,self.ymax=self.ax.get_ylim()
+        xmin, xmax=self.ax.get_xlim()
+        ymin, ymax=self.ax.get_ylim()
         for b in xrange(self.bike_num):
-	    if self.mask[b]:
+	    if mask[b]:
 		for i in xrange(4):
-		    self.circles[b][i].center = (self.bike[b].position[i][0], self.bike[b].position[i][1])
+		    circles[b][i].center = (bike[b].position[i][0], bike[b].position[i][1])
 		for i in xrange(4):
-		    if(self.bike[b].position[i][0]>self.xmax-5):
-			self.ax.set_xlim((25+self.xmin),(25+self.xmax))
+		    if(bike[b].position[i][0]>xmax-5):
+			self.ax.set_xlim((25+xmin),(25+xmax))
 			self.ax.figure.canvas.draw()
-		    if(self.bike[b].position[i][1]<self.ymin+5):
-			self.ax.set_ylim((self.ymin-5),(self.ymax-5))
+		    if(bike[b].position[i][1]<ymin+5):
+			self.ax.set_ylim((ymin-5),(ymax-5))
 			self.ax.figure.canvas.draw()
-		    if(self.bike[b].position[i][1]>self.ymax-5):
-			self.ax.set_ylim((self.ymin+5),(self.ymax+5))
+		    if(bike[b].position[i][1]>ymax-5):
+			self.ax.set_ylim((ymin+5),(ymax+5))
 			self.ax.figure.canvas.draw()
 		    for j in xrange(i+1,4):
-			self.lines[b][i][j].set_data([self.bike[b].position[i][0], self.bike[b].position[j][0]], [self.bike[b].position[i][1], self.bike[b].position[j][1]])
+			lines[b][i][j].set_data([bike[b].position[i][0], bike[b].position[j][0]], [bike[b].position[i][1], bike[b].position[j][1]])
         
 	plt.draw()
     
     def remove(self, b):
-	for i in xrange(4):
-	    self.circles[b][i].set_visible(False)
-	    for j in xrange(i+1,4):
-		self.lines[b][i][j].set_visible(False)
+	if self.mask[b]:
+	    for i in xrange(4):
+		self.circles[b][i].set_visible(False)
+		for j in xrange(i+1,4):
+		    self.lines[b][i][j].set_visible(False)
+	self.mask[b] = False
     
     def show(self):
 	plt.ioff()

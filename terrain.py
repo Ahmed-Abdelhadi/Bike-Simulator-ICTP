@@ -71,7 +71,8 @@ class terrain_class(object):
 	x = self.x
 	y = self.y
         result=[]
-	dist,n = min([(abs(xi-x0),i) for i,xi in enumerate(x)])
+        n=int(round(x0/10.)+1)
+	#dist,n = min([(abs(xi-x0),i) for i,xi in enumerate(x)])
 	if n == 0 or n == len(x)-1:
 	    print 'bike out of  terrain!!!'
 
