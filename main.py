@@ -7,7 +7,7 @@ from physics import physics_class
 
 terrain = terrain_class(rand=5, improved=True)
 
-n_bike = 3
+n_bike = 30
 factory = bike_factory_class(n_bike)
 
 for i in xrange(100):
