@@ -5,7 +5,13 @@ from  matplotlib.patches import Circle
 
 
 class animate_class(object):
+    """ 
+    Animate class for visualization
+    blah blah
+    """
+
     def __init__(self, bike, terrain, mask = [True]):
+
 	if hasattr(bike, '__iter__'):
 	    self.bike = bike
 	else:
@@ -40,6 +46,11 @@ class animate_class(object):
 		
    
     def draw(self,gen):
+        """
+        Draw lines connecting vertices of the bike and draw radius.
+
+        Changes the window as the bike moves.
+        """
         self.gen=gen
         self.string='Generation %d'%self.gen
         self.ax.text(0.05,0.9,self.string,fontsize=20.0,transform=self.ax.transAxes)
