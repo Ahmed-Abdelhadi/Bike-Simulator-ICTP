@@ -17,6 +17,8 @@ In this documentation we report our implemetation of Funny Bikes using genetic a
 
 4- Prathyusha
 
+This program consists of the following main classes:
+
 
 .. toctree::
    :maxdepth: 2
