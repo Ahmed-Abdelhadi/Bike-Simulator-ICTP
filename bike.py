@@ -26,7 +26,7 @@ class bike_class(object):
 		dr = math.sqrt(dx*dx + dy*dy)
 		self._spring_length[i][j]=dr
 		
-    def randomize(self,size = 5., offset = 3.):
+    def randomize(self,size = 10., offset = 3.):
 	for i in xrange (4):
 	    for j in xrange(2):
 		self._construction[i][j]=size*random.random()+offset
@@ -145,9 +145,19 @@ class bike_class(object):
     
     
     def save_json(self, path):
-	x=json.dumps(self, default=lambda o: o.__dict__, sort_keys=True, indent=4)
+	a = {
+	    "position" : self._position,
+	    "radius" : self._radius,
+	    "mass"   : self._mass,
+	    "result" : self._result,
+	    "spring_const" : self._spring_const,
+	    "spring_length" : self._spring_length,  
+	    }
+	
+	
+	x=json.dumps(a, sort_keys=True, indent=4)
 	with open(path, 'wb') as fp:
-	    json.dump(x, fp)
+	    fp.write(x)
 	    
     def load_json(self, path):
 	with open(path, 'rb') as fp:
@@ -160,11 +170,18 @@ class bike_class(object):
 if __name__=="__main__":
     #pass
     H=bike_class()
-    print H.radius
-    print H.position
+    #print H.radius
+    #print H.position
     H.randomize()
-    print H.position
+   # print H.position
     #print H.position[2]
     x=H.save_json("data.json")
     data=H.load_json("data.json")
-    print data
+    print data["position"]
+    print data["radius"]
+    print data["mass"]
+    print data["result"]
+    print data["spring_const"]
+    print data["spring_length"]
+ 
+    
