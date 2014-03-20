@@ -27,10 +27,12 @@ class bike_class(object):
 		self._spring_length[i][j]=dr
 		
     def randomize(self,size = 10., offset = 3.):
+	for i in xrange (2):
+	    self._radius[i] = 0.5+2.5*random.random()
 	for i in xrange (4):
 	    for j in xrange(2):
-		self._construction[i][j]=size*random.random()+offset
-		self._spring_const[i][j]=(9.9*random.random()+0.1)*spring_const[i][j]
+		self._construction[i][j] = size*random.random()+offset
+		self._spring_const[i][j] = (9.9*random.random()+0.1)*self._spring_const[i][j]
 	self.check()
 	return
 

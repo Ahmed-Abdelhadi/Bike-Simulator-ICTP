@@ -5,8 +5,11 @@ from  matplotlib.patches import Circle
 from physics import physics_class
 
 class animate_class(object):
-    def __init__(self, bike, mask, terrain):
-	self.bike = bike
+    def __init__(self, bike, terrain, mask = [True]):
+	if hasattr(bike, '__iter__'):
+	    self.bike = bike
+	else:
+	    self.bike = [bike]
 	self.bike_num = len(bike)
 	self.mask = mask
 	self.terrain = terrain
