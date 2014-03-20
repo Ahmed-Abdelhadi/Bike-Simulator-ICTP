@@ -2,11 +2,14 @@ import numpy as np
 import scipy as sc
 import matplotlib.pyplot as plt
 from  matplotlib.patches import Circle
-from physics import physics_class
+
 
 class animate_class(object):
-    def __init__(self, bike, mask, terrain):
-	self.bike = bike
+    def __init__(self, bike, terrain, mask = [True]):
+	if hasattr(bike, '__iter__'):
+	    self.bike = bike
+	else:
+	    self.bike = [bike]
 	self.bike_num = len(bike)
 	self.mask = mask
 	self.terrain = terrain
@@ -20,6 +23,8 @@ class animate_class(object):
 	self.ax.set_xlim(0.,50.)
 	self.ax.set_ylim(0.,30.)
 	plt.plot(terrain.x,terrain.y,'r',lw=2.0)
+
+
 	for b in xrange(self.bike_num):
 	    for i in xrange(2):
 		self.circles[b][i] = plt.Circle((bike[b].position[i][0],bike[b].position[i][1]),bike[b].radius[i],linewidth=2,color="#00bb00")
@@ -33,7 +38,10 @@ class animate_class(object):
 		    self.ax.add_line(self.lines[b][i][j])
 		
    
-    def draw(self):
+    def draw(self,gen):
+        self.gen=gen
+        self.string='Generation %d'%self.gen
+        self.ax.text(0.05,0.9,self.string,fontsize=20.0,transform=self.ax.transAxes)
         self.xmin,self.xmax=self.ax.get_xlim()
         self.ymin,self.ymax=self.ax.get_ylim()
         for b in xrange(self.bike_num):

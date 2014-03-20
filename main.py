@@ -7,14 +7,14 @@ from physics import physics_class
 
 terrain = terrain_class(rand=5, improved=True)
 
-n_bike = 3
+n_bike = 30
 factory = bike_factory_class(n_bike)
 
-for i in xrange(100):
+for i in xrange(30):
     print "Generation %i, try %i bikes"%(factory.generation,factory.size)
 #go simulation
     bike_mask = [True for bike in factory.bikes]
-    animate  = animate_class(factory.bikes, bike_mask, terrain)
+    animate  = animate_class(factory.bikes, terrain, bike_mask)
     physics = [physics_class(bike,terrain) for bike in factory.bikes]
     time = 0
 
@@ -27,7 +27,7 @@ for i in xrange(100):
 		animate.remove(b)
 	time+=1
 	if not time%100:
-	    animate.draw()
+	    animate.draw(i)
     
     animate.close()
 	
@@ -51,7 +51,7 @@ for i in xrange(5):
 	    physics.step()
 
 	    if not time%100:
-		animate.draw()
+		animate.draw(i)
 
 	    if physics.stuck():
 		break
