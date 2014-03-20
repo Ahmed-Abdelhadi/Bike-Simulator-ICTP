@@ -64,7 +64,7 @@ class terrain_class():
 	if dist <> None:
 #	    print dist
 	    if dist[0][1]<0:
-		print 'bike under terrain!!!'
+#		print 'bike under terrain!!!'
 		dist[1] *=-1
             result.append(dist) 
 
@@ -72,7 +72,7 @@ class terrain_class():
 	if dist <> None:
 #	    print dist
 	    if dist[0][1]<0:
-	        print 'bike under terrain!!!'
+#	        print 'bike under terrain!!!'
 		dist[1] *=-1
 	    result.append(dist) 
 
@@ -83,7 +83,7 @@ class terrain_class():
             tau = (norm[1],-norm[0])
     	    if norm[1]<0:
 		tau = (-norm[1],norm[0])
-	        print 'bike under terrain!!!'
+#	        print 'bike under terrain!!!'
 		norm_length *=-1
 	    result.append((norm,norm_length,tau))
 	return result
