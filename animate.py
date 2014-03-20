@@ -5,11 +5,13 @@ from  matplotlib.patches import Circle
 
 
 class animate_class(object):
-    def __init__(self,bike,terrain):
-	self.bike=bike
-	self.terrain=terrain
-	self.circles=[]
-	self.lines=[[None for _ in range(4)] for _ in range(4)]
+    def __init__(self, bike, mask, terrain):
+	self.bike = bike
+	self.bike_num = len(bike)
+	self.mask = mask
+	self.terrain = terrain
+	self.circles = [[None for _ in xrange(4)] for _ in xrange(self.bike_num)]
+	self.lines = [[[None for _ in xrange(4)] for _ in xrange(4)] for _ in xrange(self.bike_num)]
 	plt.ion()
 	#self.figure = plt.figure()
         self.fig,self.ax=plt.subplots()
@@ -18,40 +20,52 @@ class animate_class(object):
 	self.ax.set_xlim(0.,50.)
 	self.ax.set_ylim(0.,30.)
 	plt.plot(terrain.x,terrain.y,'r',lw=2.0)
-	for i in xrange(2):
-	    self.circles.append(plt.Circle((bike.position[i][0],bike.position[i][1]),bike.radius[i],linewidth=2,color="#00bb00"))
-	    self.ax.add_patch(self.circles[i])
-	for i in xrange(2,4):
-	    self.circles.append(plt.Circle((bike.position[i][0],bike.position[i][1]),0.05,linewidth=2,color="#00bb00"))
-	    self.ax.add_patch(self.circles[i])
-	for i in xrange(4):
-	    for j in xrange(i+1,4):
-		self.lines[i][j] = plt.Line2D([bike.position[i][0],bike.position[j][0]], [bike.position[i][1],bike.position[j][1]])
-		self.ax.add_line(self.lines[i][j])
+
+
+	for b in xrange(self.bike_num):
+	    for i in xrange(2):
+		self.circles[b][i] = plt.Circle((bike[b].position[i][0],bike[b].position[i][1]),bike[b].radius[i],linewidth=2,color="#00bb00")
+		self.ax.add_patch(self.circles[b][i])
+	    for i in xrange(2,4):
+		self.circles[b][i] = plt.Circle((bike[b].position[i][0],bike[b].position[i][1]),0.05,linewidth=2,color="#00bb00")
+		self.ax.add_patch(self.circles[b][i])
+	    for i in xrange(4):
+		for j in xrange(i+1,4):
+		    self.lines[b][i][j] = plt.Line2D([bike[b].position[i][0],bike[b].position[j][0]], [bike[b].position[i][1],bike[b].position[j][1]])
+		    self.ax.add_line(self.lines[b][i][j])
 		
    
-    def draw(self):
+    def draw(self,gen):
+        self.gen=gen
+        self.string='Generation %d'%self.gen
+        self.ax.text(0.05,0.9,self.string,fontsize=20.0,transform=self.ax.transAxes)
         self.xmin,self.xmax=self.ax.get_xlim()
         self.ymin,self.ymax=self.ax.get_ylim()
-	for i in xrange(4):
-	    self.circles[i].center = (self.bike.position[i][0], self.bike.position[i][1])
-	for i in xrange(4):
-            if(self.bike.position[i][0]>self.xmax-5):
-                self.ax.set_xlim((25+self.xmin),(25+self.xmax))
-            if(self.bike.position[i][0]<self.xmin):
-                self.ax.set_xlim((self.xmin-10),(10-self.xmax))
-                self.ax.figure.canvas.draw()
-            if(self.bike.position[i][1]<self.ymin+5):
-                self.ax.set_ylim((self.ymin-5),(self.ymax-5))
-                self.ax.figure.canvas.draw()
-	    if(self.bike.position[i][1]>self.ymax-5):
-                self.ax.set_ylim((self.ymin+5),(self.ymax+5))
-                self.ax.figure.canvas.draw()
-	    for j in xrange(i+1,4):
-		self.lines[i][j].set_data([self.bike.position[i][0], self.bike.position[j][0]], [self.bike.position[i][1], self.bike.position[j][1]])
+        for b in xrange(self.bike_num):
+	    if self.mask[b]:
+		for i in xrange(4):
+		    self.circles[b][i].center = (self.bike[b].position[i][0], self.bike[b].position[i][1])
+		for i in xrange(4):
+		    if(self.bike[b].position[i][0]>self.xmax-5):
+			self.ax.set_xlim((25+self.xmin),(25+self.xmax))
+			self.ax.figure.canvas.draw()
+		    if(self.bike[b].position[i][1]<self.ymin+5):
+			self.ax.set_ylim((self.ymin-5),(self.ymax-5))
+			self.ax.figure.canvas.draw()
+		    if(self.bike[b].position[i][1]>self.ymax-5):
+			self.ax.set_ylim((self.ymin+5),(self.ymax+5))
+			self.ax.figure.canvas.draw()
+		    for j in xrange(i+1,4):
+			self.lines[b][i][j].set_data([self.bike[b].position[i][0], self.bike[b].position[j][0]], [self.bike[b].position[i][1], self.bike[b].position[j][1]])
         
 	plt.draw()
-	
+    
+    def remove(self, b):
+	for i in xrange(4):
+	    self.circles[b][i].set_visible(False)
+	    for j in xrange(i+1,4):
+		self.lines[b][i][j].set_visible(False)
+    
     def show(self):
 	plt.ioff()
 	plt.show()
