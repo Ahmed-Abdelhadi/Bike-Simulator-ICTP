@@ -26,9 +26,11 @@ def _choose_one(probab):
 
 #=================================================================
 class bike_factory_class(object):
-    """ bike factory class has set of bikes and produce new set of bikes
-	bikes: 		set of bikes
-	mutation_ratio:	ratio of mutation in new population """
+    """ Bike factory class has set of bikes and produce new set of bikes
+
+	Args:
+           sizer (int): Number of bikes in population.
+     """
 #    from Bike_start import Bike
     
     def __init__(self, size = 100):
@@ -43,24 +45,21 @@ class bike_factory_class(object):
 
     @property
     def generation(self):
+        """ Property of bike_factory_class - number of generation"""
 	return self._generation
 
     @property
     def size(self):
+        """ Property of bike_factory_class - size of population"""
 	return self._size
     @property
     def bikes(self):
+        """ Property of bike_factory_class - list of bikes"""
 	return self._bikes
-
-#    def __call__(self):
-#	"""Send bike for testing """
-#	for i in self.bikes:
-#	    yield i
-#	return
 
 #-----------------------------------------------------
     def make_new_generation(self):
-	""" Produce new generation of bikes"""
+	""" Produce new generation of bikes inside the factory."""
 	old_bikes  =  self._bikes
 	self._bikes = []
 	# make ranking 
@@ -116,6 +115,7 @@ class bike_factory_class(object):
     
     
 def save_bike_factory(factory,filename = 'bike_factory.sav'):
+    """Save state of factory to file"""
     from pickle import dump
     f=open(filename,'wb')
     dump(factory,f)
@@ -123,6 +123,7 @@ def save_bike_factory(factory,filename = 'bike_factory.sav'):
     return
 
 def read_bike_factory(filename = 'bike_factory.sav'):
+    """Read state of factory from file"""
     from pickle import load 
     f=open(filename,'rb')
     factory = load(f)
