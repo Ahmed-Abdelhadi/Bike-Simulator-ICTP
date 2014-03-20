@@ -1,14 +1,8 @@
 Physics Class: 
 ======================================
 
-In this class we discuss the creation of bike with the following parameters:
-* Points
-* Radius
+In this class we create an engine for simulating physical laws:
 
-Here is something I want to talk about::
+.. autoclass:: physics.physics_class
+    :members:
 
-    def my_fn(foo, bar=True):
-        """A really useful function.
-
-        Returns None
-        """
