@@ -10,12 +10,13 @@ class animate_class(object):
     blah blah
     """
 
-    def __init__(self, bike, terrain, mask = [True]):
+    def __init__(self, bike0, terrain, mask = [True]):
 
-	if hasattr(bike, '__iter__'):
-	    self.bike = bike
+	if hasattr(bike0, '__iter__'):
+	    bike = bike0
 	else:
-	    self.bike = [bike]
+	    bike = [bike0]
+	self.bike = bike
 	self.bike_num = len(bike)
 	self.mask = mask
 	self.terrain = terrain
